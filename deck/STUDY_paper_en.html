@@ -1,0 +1,1525 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study notes</title><style>
+:root{--bg:#F6F8FB;--card:#FFFFFF;--ink:#1E293B;--muted:#5B6B7F;--line:#E2E8F0;
+--accent:#F08A24;--navy:#0F1B2D;--say:#FFF6EC;--sayline:#F3C899;--chip:#EEF2F6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1220;--card:#131C2E;
+--ink:#E5EAF2;--muted:#94A3B8;--line:#24324A;--navy:#E5EAF2;--say:#2A2116;--sayline:#7A5326;--chip:#1C2740}}
+:root[data-theme="dark"]{--bg:#0B1220;--card:#131C2E;--ink:#E5EAF2;--muted:#94A3B8;--line:#24324A;
+--navy:#E5EAF2;--say:#2A2116;--sayline:#7A5326;--chip:#1C2740}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+-webkit-text-size-adjust:100%}
+main{max-width:760px;margin:0 auto;padding:12px 16px 80px;overflow-wrap:anywhere}
+h1{font-size:1.35rem;line-height:1.3;margin:12px 0 4px;color:var(--navy)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 16px;
+display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;min-width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+padding:0 10px;border-radius:18px;background:var(--chip);color:var(--ink);text-decoration:none;font-weight:600;font-size:.9rem}
+nav a:last-child{margin-right:16px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;scroll-margin-top:60px}
+summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:700;font-size:1.05rem;display:flex;gap:10px;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+summary .n{flex:0 0 auto;color:#fff;background:var(--accent);border-radius:10px;padding:0 8px;font-size:.85rem}
+summary::after{content:"+";margin-left:auto;color:var(--muted);font-weight:400}
+details[open] summary::after{content:"−"}
+.body{padding:0 16px 14px}
+.body p,.body li{overflow-wrap:anywhere}
+.body strong{color:var(--navy)}
+.body ul{padding-left:20px}
+.body li{margin:4px 0}
+blockquote{margin:10px 0;padding:10px 14px;background:var(--say);border-left:4px solid var(--sayline);border-radius:8px;font-size:1.02rem}
+blockquote p{margin:6px 0}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:14px 0 2px}
+.table{overflow-x:auto;max-width:100%;margin:8px 0}
+td code{word-break:break-all}
+table{border-collapse:collapse;font-size:.88rem;min-width:100%}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.nw{white-space:nowrap}
+code{background:var(--chip);border-radius:4px;padding:1px 4px;font-size:.85em;overflow-wrap:anywhere}
+.intro{color:var(--muted);font-size:.95rem}
+.tools{display:flex;gap:8px;margin:10px 0}
+.tools button{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px;font-size:.9rem}
+</style></head><body><nav><a href="#x0">★</a><a href="#x1">?</a><a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a><a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a><a href="#s9">9</a><a href="#s10">10</a><a href="#s11">11</a><a href="#s12">12</a><a href="#s13">13</a><a href="#s14">14</a><a href="#s15">15</a><a href="#s16">16</a><a href="#s17">17</a><a href="#s18">18</a><a href="#s19">19</a><a href="#s20">20</a><a href="#s21">21</a><a href="#s22">22</a><a href="#x24">!</a><a href="#x25">+</a></nav><main><h1>Study notes — the ICRNNA paper talk</h1><div class="intro"><p><strong>The deck:</strong> <code>moshe_paper_icrnna son2.pptx</code>, 22 slides.</p>
+<ul>
+<li><strong>Main talk:</strong> slides 1–10.</li>
+<li><strong>Backup:</strong> slides 11–22, shown only if asked.</li>
+</ul>
+<p><strong>The paper:</strong> El-Haryqy, Kharbouche, Ouamna, Madini, Zouine. <em>Improved automatic modulation recognition using deep learning with additive attention.</em> Results in Engineering 26 (2025) 104783. Page numbers below are the paper's own pages.</p>
+<p><strong>How each slide card is laid out:</strong></p>
+<ul>
+<li><strong>On the slide:</strong> every piece of text on the slide, so nothing on it is a surprise.</li>
+<li><strong>What it means:</strong> each term and number, one at a time: what it is, and what it is not.</li>
+<li><strong>In the paper:</strong> where it comes from.</li>
+<li><strong>If asked:</strong> likely questions, each with a short answer to say aloud.</li>
+<li><strong>Say it in 30 seconds:</strong> the speaker note, ready to rehearse.</li>
+</ul>
+<p><strong>Where the numbers come from:</strong></p>
+<ul>
+<li><strong>The paper:</strong> cited by table, figure or page.</li>
+<li><strong>The authors' code:</strong> released on GitHub on 8 August 2026 (<code>OFFICIAL_CODE.md</code>).</li>
+<li><strong>Our runs:</strong> the result files in the repository.</li>
+</ul></div><div class="tools"><button id="open">Open all</button><button id="close">Close all</button></div><details id="x0" open><summary><span class="n">★</span><span>The talk in two minutes</span></summary><div class="body"><p><strong>The story:</strong></p>
+<ol>
+<li><strong>The task.</strong> A neural network looks at 128 samples of a radio signal and names which of 11 modulation types sent it. On the standard dataset, RML2016.10a, the paper reports 63.24% correct, the best of the 12 models it compares.</li>
+<li><strong>The model.</strong> It works in four steps: short filters (CNN), reading in order (bidirectional LSTM), a weighted average (attention), and a decision (dense layers). Step 2 holds 83% of the numbers and does most of the work.</li>
+<li><strong>The training.</strong> It was trained on 70% of the data, stopped by itself after 58 passes, and tested once on 15% that it never saw.</li>
+<li><strong>The result.</strong> Accuracy goes from chance at −20 dB to about 93% from 0 dB up.</li>
+<li><strong>Where it fails.</strong> At 0 dB it still confuses WBFM with AM-DSB, QAM16 with QAM64, and sometimes 8PSK with QPSK.</li>
+<li><strong>How much better it really is.</strong> Trained the same way as four older models, it is first, but only by about one point.</li>
+</ol>
+<p><strong>Ten numbers to know cold:</strong></p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">number</th>
+<th class="nw">what it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">63.24%</td>
+<td>the paper's overall accuracy on RML2016.10a (Table 3)</td>
+</tr>
+<tr>
+<td class="nw">62.73%</td>
+<td>the runner-up in their table, CNN-BiLSTM-DNN: half a point behind</td>
+</tr>
+<tr>
+<td class="nw">2 × 128</td>
+<td>the input: 128 samples of I and 128 of Q</td>
+</tr>
+<tr>
+<td class="nw">16</td>
+<td>symbols in one frame (8 samples per symbol)</td>
+</tr>
+<tr>
+<td class="nw">220,000</td>
+<td>frames in the dataset: 11 types × 20 SNR labels × 1,000</td>
+</tr>
+<tr>
+<td class="nw">794,188</td>
+<td>numbers in the model (their code's count); 83% in the LSTM</td>
+</tr>
+<tr>
+<td class="nw">58</td>
+<td>the epoch where their training stopped by itself</td>
+</tr>
+<tr>
+<td class="nw">9% / ~93%</td>
+<td>accuracy at −20 dB (chance) / from 0 dB up</td>
+</tr>
+<tr>
+<td class="nw">57.9%</td>
+<td>WBFM frames called AM-DSB at 0 dB</td>
+</tr>
+<tr>
+<td class="nw">63.21%</td>
+<td>our rebuild from the paper's text, one run, trained to epoch 107</td>
+</tr>
+</tbody>
+</table></div></div></details><details id="x1"><summary><span class="n">?</span><span>Glossary</span></summary><div class="body"><p>Every technical word on the slides, with what it is and, where people get it wrong, what it is not.</p>
+<p><strong>Signals</strong></p>
+<ul>
+<li><strong>Modulation</strong> — How information (bits or audio) is put onto a carrier wave: by changing its amplitude, phase or frequency.</li>
+<li><strong>Modulation classification (AMC) / recognition (AMR)</strong> — Naming which modulation a received signal uses, without being told. <em>Not</em> detection (is a signal there at all?) and <em>not</em> demodulation (recovering the bits).</li>
+<li><strong>Classifier</strong> — A system that assigns one label out of a fixed list. This one always answers with one of 11 types; it cannot say "none".</li>
+<li><strong>Carrier</strong> — The radio wave at a fixed frequency that the modulation changes.</li>
+<li><strong>Baseband / complex baseband</strong> — The signal after the receiver has removed the carrier frequency. What remains is the modulation itself, as a stream of complex numbers.</li>
+<li><strong>I and Q (in-phase and quadrature)</strong> — The two outputs of down-conversion, one from mixing with a cosine and one with a sine. Together they form one complex sample, I + jQ.<ul>
+<li>Amplitude = √(I² + Q²).</li>
+<li>Phase = atan2(Q, I).</li>
+</ul>
+</li>
+<li><strong>Sample</strong> — One complex measurement at one instant. In this dataset, 200,000 samples per second.</li>
+<li><strong>Symbol</strong> — One transmitted point of the constellation, held for a fixed time. Here a symbol lasts 8 samples.</li>
+<li><strong>Constellation</strong> — The set of points a digital modulation can send, drawn on the I–Q plane.<ul>
+<li>QPSK: 4 points on a circle.</li>
+<li>QAM16: a 4 × 4 grid.</li>
+</ul>
+</li>
+<li><strong>Frame</strong> — One example in the dataset: 128 consecutive samples, i.e. 16 symbols or 0.64 ms.</li>
+<li><strong>SNR (signal-to-noise ratio)</strong> — Signal power divided by noise power.</li>
+<li><strong>dB (decibel)</strong> — 10 × log10 of a power ratio.<ul>
+<li>0 dB = equal power.</li>
+<li>+10 dB = 10 times.</li>
+<li>+20 dB = 100 times.</li>
+<li>−10 dB = one tenth.</li>
+<li>+3 dB ≈ twice.</li>
+</ul>
+</li>
+<li><strong>SNR label</strong> — The number the dataset attaches to each frame (−20 … +18 dB). It is <em>not</em> a measured SNR: in this file the real SNR differs by type at the same label.</li>
+<li><strong>AWGN</strong> — Additive white Gaussian noise: an independent random number added to every sample, with equal power at all frequencies.</li>
+<li><strong>Fading</strong> — The received strength rising and falling over time because of the channel. In this dataset it swings by about 5.7 dB over a run.</li>
+<li><strong>Multipath</strong> — Several delayed copies of the signal adding up. Here there are three paths.</li>
+<li><strong>Frequency offset</strong> — The receiver's frequency not exactly matching the transmitter's, so the constellation slowly rotates.</li>
+<li><strong>Radio channel vs. CNN channel</strong> — Two different meanings of "channel".<ul>
+<li>A radio <em>channel</em> is the path between transmitter and receiver.</li>
+<li>In a CNN, <em>channels</em> are the number of filter outputs at each time step (64, then 128).</li>
+</ul>
+</li>
+</ul>
+<p><strong>The 11 types</strong></p>
+<ul>
+<li><strong>BPSK</strong> — Phase takes 2 values (0°, 180°). 1 bit per symbol.</li>
+<li><strong>QPSK</strong> — Phase takes 4 values, 90° apart. 2 bits.</li>
+<li><strong>8PSK</strong> — Phase takes 8 values, 45° apart. 3 bits.</li>
+<li><strong>PAM4</strong> — Amplitude takes 4 levels on one axis. 2 bits.</li>
+<li><strong>QAM16</strong> — 16 points on a 4 × 4 grid, amplitude and phase both change. 4 bits.</li>
+<li><strong>QAM64</strong> — 64 points on an 8 × 8 grid. 6 bits.</li>
+<li><strong>GFSK</strong> — Frequency shifts driven by bits, smoothed by a Gaussian filter (as in Bluetooth). Digital.</li>
+<li><strong>CPFSK</strong> — Frequency shifts driven by bits, with no phase jumps. Digital.</li>
+<li><strong>WBFM</strong> — Wideband FM: audio changes the frequency (FM radio). Analog.</li>
+<li><strong>AM-DSB</strong> — Audio changes the amplitude; both sidebands are sent (classic AM). Analog.</li>
+<li><strong>AM-SSB</strong> — The same, but only one sideband is sent, so it uses half the bandwidth. Analog.</li>
+<li><strong>Digital vs. analog</strong> — What the <em>message</em> is: bits (digital) or audio (analog). All 11 are stored as sampled numbers either way.</li>
+</ul>
+<p><strong>The model</strong></p>
+<ul>
+<li><strong>Neural network</strong> — A function built from layers. Its behaviour is set by many adjustable numbers (weights), found by training on examples with known answers.</li>
+<li><strong>Parameters / weights / "numbers learned"</strong> — Those adjustable numbers. The model has 794,188 by Keras's count.<ul>
+<li>792,396 of them are trained.</li>
+<li>The other 1,792 are running averages kept by the normalization layers.</li>
+</ul>
+</li>
+<li><strong>Layer</strong> — One processing stage, e.g. a convolution or an LSTM.</li>
+<li><strong>Convolution (1-D)</strong> — A short filter slid along the signal, multiplying and adding at each position. Like an FIR filter whose taps are learned instead of designed.</li>
+<li><strong>Filter / kernel / taps</strong> — One such sliding filter. "3 taps" means it looks at 3 consecutive samples.</li>
+<li><strong>ReLU</strong> — After each filter: negative values become 0, positive ones pass. This makes the network non-linear.</li>
+<li><strong>Max pooling</strong> — Keeps the larger of each pair of neighbouring values, so the sequence becomes half as long (128 → 64).</li>
+<li><strong>CNN</strong> — Convolutional neural network: layers of convolutions.</li>
+<li><strong>RNN / recurrent</strong> — A layer that reads a sequence step by step and carries a state from one step to the next.</li>
+<li><strong>LSTM (long short-term memory)</strong> — A recurrent layer whose state is controlled by three learned gates.<ul>
+<li>Forget: how much of the old state to keep.</li>
+<li>Input: what to add from the new step.</li>
+<li>Output: what to pass on.</li>
+<li>In signal-processing terms: a learned, non-linear recursive filter.</li>
+</ul>
+</li>
+<li><strong>Bidirectional (BiLSTM)</strong> — Two LSTMs, one reading forwards and one backwards, with their outputs side by side.</li>
+<li><strong>Hidden state / memory</strong> — The LSTM's state vector: 128 numbers per direction.</li>
+<li><strong>Attention (additive)</strong> — Gives each time step a score from a small network, turns the scores into weights that add up to 1, and averages the steps with those weights. "Additive" because the score adds two transformed vectors inside a tanh. <em>Not</em> the transformer attention of ChatGPT.</li>
+<li><strong>Softmax</strong> — Turns a list of scores into positive numbers that add up to 1: exponentiate each, divide by the sum.</li>
+<li><strong>Dense (fully connected) layer</strong> — Every input connected to every output: a matrix multiplication plus an offset.</li>
+<li><strong>Confidence score / probability</strong> — The softmax outputs of the last layer, one per type. The largest is the answer. <em>Not</em> checked as a calibrated probability.</li>
+<li><strong>Batch normalization</strong> — Rescales each feature to a standard range during training, which keeps training stable.</li>
+<li><strong>Layer normalization</strong> — Rescales one vector to zero mean and unit spread. Used on the attention output.</li>
+<li><strong>Dropout</strong> — During training, a random fraction of the numbers (here 30%) is switched off, so the network cannot rely on any single one. Switched off at test time.</li>
+<li><strong>L2 regularization</strong> — A penalty on large weights (here 1e-4).</li>
+</ul>
+<p><strong>Training</strong></p>
+<ul>
+<li><strong>Training / validation / test set</strong> — Three parts of the data.<ul>
+<li>Training: what the network learns from.</li>
+<li>Validation: what decides when to stop.</li>
+<li>Test: kept aside, used once, at the end, for the reported result.</li>
+</ul>
+</li>
+<li><strong>Loss / cross-entropy</strong> — The number training makes smaller: minus the log of the probability the network gives to the right answer, averaged over frames.</li>
+<li><strong>Gradient</strong> — How the loss changes when each weight changes slightly.</li>
+<li><strong>Gradient descent / optimizer</strong> — The rule for nudging the weights against the gradient to reduce the loss.</li>
+<li><strong>Adam</strong> — A widely used version of gradient descent that adapts the step size for each weight.</li>
+<li><strong>Learning rate</strong> — The size of each nudge; here 0.001 to start.</li>
+<li><strong>Batch</strong> — The frames processed together for one update; here 32.</li>
+<li><strong>Step</strong> — One update, i.e. one batch. Here 154,000 / 32 ≈ 4,813 steps per epoch.</li>
+<li><strong>Epoch / pass</strong> — One pass through all the training frames.</li>
+<li><strong>Validation loss</strong> — The loss measured on the validation set after each epoch.</li>
+<li><strong>Early stopping</strong> — Stop when the validation loss has not improved for a set number of epochs (here 6), and go back to the best weights.</li>
+<li><strong>ReduceLROnPlateau</strong> — Cut the learning rate when the validation loss stalls (here × 0.2 after 5 flat epochs).</li>
+<li><strong>Patience</strong> — How many flat epochs a rule waits before acting.</li>
+<li><strong>Gradient clipping</strong> — Capping the size of each update so one bad batch cannot throw training off. Their code uses <code>clipnorm=1.0</code>.</li>
+<li><strong>Seed</strong> — The number that fixes the randomness (starting weights, data order). A different seed gives a slightly different result.</li>
+<li><strong>Split</strong> — How the frames are divided into the three sets.</li>
+<li><strong>Overfitting</strong> — Learning the training frames themselves rather than the pattern, so new frames do much worse. Not a problem here: training and validation accuracy are within a point.</li>
+</ul>
+<p><strong>Results</strong></p>
+<ul>
+<li><strong>Accuracy</strong> — Correct decisions divided by all decisions.</li>
+<li><strong>Chance level</strong> — The accuracy of guessing: 1 in 11 ≈ 9.1%.</li>
+<li><strong>Recall (of a type)</strong> — Of the frames that really are X, the fraction called X.</li>
+<li><strong>Precision (of a type)</strong> — Of the frames called X, the fraction that really are X.</li>
+<li><strong>F1 score</strong> — The harmonic mean of precision and recall.</li>
+<li><strong>Confusion matrix</strong> — Rows: the true type. Columns: what the classifier said. The diagonal is correct. Each row's percentages are that type's recall.</li>
+<li><strong>Ablation</strong> — Removing parts of a model one at a time to see what each contributes.</li>
+<li><strong>Benchmark</strong> — A shared dataset everyone reports on, so numbers can be compared.</li>
+<li><strong>State of the art</strong> — The best published result on a benchmark. The paper uses it to mean "best of the twelve we compare".</li>
+<li><strong>FLOPs</strong> — Floating-point operations needed for one frame: the computing cost.</li>
+</ul></div></details><details id="s1"><summary><span class="n">1</span><span>Title</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"PAPER PRESENTATION"</li>
+<li>"ICRNNA"</li>
+<li>"Improved automatic modulation recognition using deep learning with additive attention"</li>
+<li>"El-Haryqy, Kharbouche, Ouamna, Madini, Zouine · Ibn Tofail University, Morocco · Results in Engineering 26 (2025) 104783"</li>
+<li>Four chips: "Look · Read in order · Weigh · Decide"</li>
+<li>"Yusuf Bilal Cetinkaya · Moshe Kam's research group · NJIT · October 2026"</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>ICRNNA</strong> — Improved Convolutional Recurrent Neural Network with Attention. Each letter is a part of the model:<ul>
+<li>C: the convolution step (CNN).</li>
+<li>R: the recurrent step (LSTM).</li>
+<li>A: the attention step.</li>
+</ul>
+</li>
+<li><strong>"Improved"</strong> — Improved over a plain CNN + RNN with attention. Two kinds of additions:<ul>
+<li>three small additions to the attention (a learned scale, dropout, a normalization);</li>
+<li>regularization in every layer (dropout, batch normalization, L2).</li>
+<li><em>Not</em> a new idea: CNN + LSTM + attention existed before; the paper's own reference [17], CNN-BiLSTM-DNN, uses the same ingredients.</li>
+</ul>
+</li>
+<li><strong>"Automatic modulation recognition"</strong> — Naming the modulation type from the received samples alone. The same task we call AMC. <em>Not</em> detection and <em>not</em> demodulation.</li>
+<li><strong>"Deep learning"</strong> — A many-layer neural network trained on examples. <em>Not</em> hand-written rules or hand-designed features.</li>
+<li><strong>"Additive attention"</strong> — The 2014 attention of Bahdanau et al.: a score from adding two transformed vectors inside a tanh. <em>Not</em> transformer attention.</li>
+<li><strong>Authors and place</strong> — Five authors at Ibn Tofail University, Kenitra, Morocco.</li>
+<li><strong>"26 (2025) 104783"</strong> — Volume 26, year 2025, article number 104783. The article number is <em>not</em> a page number.</li>
+<li><strong>Results in Engineering</strong> — An open-access Elsevier journal covering all of engineering. <em>Not</em> a signal-processing journal. Received December 2024, published online April 2025; licence CC BY-NC 4.0.</li>
+<li><strong>Look / Read in order / Weigh / Decide</strong> — The four steps of the model in plain words: CNN, LSTM, attention, dense. Explained on slide 4.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Title and authors: page 1.</li>
+<li>The acronym and its parts: Section 1, end of page 2.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"What does ICRNNA stand for?"</em> — "Improved Convolutional Recurrent Neural Network with Attention: a convolution, then a recurrent layer, then attention."</li>
+<li><em>"Is this detection?"</em> — "No, classification. A signal is there; the question is which of eleven types it is."</li>
+<li><em>"Why this paper?"</em> — "Our classifier is built on this design, so I should be able to explain it."</li>
+<li><em>"Is it a good journal?"</em> — "It's an open-access Elsevier engineering journal, broad rather than specialised. That's one reason we checked the number ourselves."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Today I present the paper our classifier comes from: ICRNNA, from a group in Morocco, published in 2025. I'll keep it simple: what it does, how it works, what it reports, and whether it holds up.</p>
+</blockquote></div></details><details id="s2"><summary><span class="n">2</span><span>The paper in one sentence</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"A neural network looks at 128 samples of a radio signal and says which of 11 modulations sent it."</li>
+<li>"63.24% — right on RML2016.10a: the best of the 12 models they compare"</li>
+<li>"our classifier — is built on this design"</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"A neural network"</strong> — A function with 794 thousand adjustable numbers: 2 × 128 numbers in, 11 numbers out.</li>
+<li><strong>"128 samples"</strong> — 128 complex samples, I and Q, taken over 0.64 ms.<ul>
+<li>At 8 samples per symbol, that is <strong>16 symbols</strong>.</li>
+<li><em>Not</em> a spectrum, an image or hand-made features: only the raw samples.</li>
+</ul>
+</li>
+<li><strong>"of a radio signal"</strong> — The complex baseband signal after the receiver has removed the carrier.</li>
+<li><strong>"says which of 11 modulations"</strong><ul>
+<li>Eight digital: BPSK, QPSK, 8PSK, QAM16, QAM64, PAM4, GFSK, CPFSK.</li>
+<li>Three analog: WBFM, AM-DSB, AM-SSB.</li>
+<li>It always picks one of the eleven; it <em>cannot</em> say "none" or "unknown". This is a closed set. So even a frame that is pure noise gets a type name.</li>
+</ul>
+</li>
+<li><strong>"63.24%"</strong> — The fraction of test frames it gets right, counted over <strong>all 20 SNR levels together</strong>.<ul>
+<li><em>Not</em> 63% everywhere: about 9% at −20 dB, which is chance, and about 93% from 0 dB up.</li>
+</ul>
+</li>
+<li><strong>"RML2016.10a"</strong> — The public dataset of O'Shea and West, generated in GNU Radio in 2016.</li>
+<li><strong>"the best of the 12 models they compare"</strong> — First in their Table 3.<ul>
+<li>The runner-up, CNN-BiLSTM-DNN, has 62.73: half a point behind, from one run.</li>
+<li><em>Not</em> "best in the world": newer models they cite, such as IQFormer, are not in their table.</li>
+</ul>
+</li>
+<li><strong>"our classifier is built on this design"</strong> — Our project's classifier uses this architecture.<ul>
+<li><em>Not</em> their code and <em>not</em> their trained network: it is a re-implementation with five small differences, and their weights were never released.</li>
+</ul>
+</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>63.24% and the 12-model comparison: Abstract and Table 3, page 6.</li>
+<li>The 11 types: Table 1, page 3.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"What is a sample? A symbol?"</em> — "A sample is one complex measurement, I plus jQ. A symbol is one transmitted point of the constellation; it lasts 8 samples, so 128 samples are 16 symbols."</li>
+<li><em>"Can it say none of these?"</em> — "No. It always picks one of the eleven, so it names a type even for frames that are only noise."</li>
+<li><em>"Is it 63% at every SNR?"</em> — "No. It's the average over all twenty levels: 9% at −20 dB, which is chance, and about 93% from 0 dB up."</li>
+<li><em>"Is your classifier the same as theirs?"</em> — "Same design, not their code. Ours differs in five small places. A separate rebuild that follows the paper exactly matches their number: 63.21 against 63.24."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>The paper in one sentence: a neural network looks at 128 samples of a radio signal and says which of 11 modulations sent it. They report 63.24 percent right on this dataset, the best of the twelve models they compare. Our own classifier is built on this design.</p>
+</blockquote></div></details><details id="s3"><summary><span class="n">3</span><span>The data: what the model sees</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"11 — modulation types: 8 digital, 3 analog"</li>
+<li>"20 — SNR labels, −20 to 18 dB, in steps of 2 dB"</li>
+<li>"220,000 — frames: 1,000 per type at each SNR"</li>
+<li>A picture: "one frame: I (orange), Q (blue)"</li>
+<li>"2 × 128 — Each frame: 128 samples of I and 128 of Q. That array is the only input."</li>
+<li>"RML2016.10a, the same dataset we use."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"8 digital, 3 analog"</strong> — Digital types carry bits: each symbol is one point from a fixed set. Analog types carry audio: WBFM, AM-DSB and AM-SSB, made from voice recordings.<ul>
+<li>GFSK and CPFSK count as digital because their frequency shifts are driven by bits.</li>
+<li>"Digital/analog" describes the <em>message</em>, <em>not</em> how the data is stored.</li>
+</ul>
+</li>
+</ul>
+<p><strong>SNR</strong> — Signal power over noise power, in dB.</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">label</th>
+<th>signal power / noise power</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">+20 dB</td>
+<td class="nw">100</td>
+</tr>
+<tr>
+<td class="nw">+10 dB</td>
+<td class="nw">10</td>
+</tr>
+<tr>
+<td class="nw">0 dB</td>
+<td class="nw">equal</td>
+</tr>
+<tr>
+<td class="nw">−10 dB</td>
+<td class="nw">one tenth</td>
+</tr>
+<tr>
+<td class="nw">−20 dB</td>
+<td class="nw">one hundredth</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>"SNR labels"</strong> — The word "labels" matters. The generator sets the noise <em>amplitude</em> from the label, so the real SNR rises about 1.9 dB per dB of label. The classes also differ at the same label. Measured in the file at label 0:</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">type</th>
+<th>measured SNR at label 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BPSK, QPSK, 8PSK</td>
+<td class="nw">~5 dB</td>
+</tr>
+<tr>
+<td class="nw">QAM16</td>
+<td class="nw">~14 dB</td>
+</tr>
+<tr>
+<td class="nw">QAM64</td>
+<td class="nw">~17 dB</td>
+</tr>
+</tbody>
+</table></div>
+<p>So label 0 is <em>not</em> "signal and noise equal".</p>
+<ul>
+<li><strong>"in steps of 2 dB"</strong> — The labels are −20, −18, …, +16, +18: twenty levels.</li>
+<li><strong>What else is in the channel</strong> — At every level, including +18 dB:<ul>
+<li>a slow frequency offset;</li>
+<li>clock drift;</li>
+<li>Rician fading, swinging about 5.7 dB over a run;</li>
+<li>three-path multipath;</li>
+<li>the Gaussian noise.</li>
+</ul>
+</li>
+<li><strong>"220,000 frames"</strong> — 11 types × 20 labels × 1,000 frames. A frame is one example: 128 consecutive samples cut from a long stream at a random point. The data is balanced, so chance is exactly 1 in 11.</li>
+<li><strong>The picture</strong> — I (orange) and Q (blue) over 128 samples. The dots are the 16 symbols, one every 8 samples.<ul>
+<li>It is <em>not</em> a frame from the dataset: we drew a clean QAM16 frame with the same pulse shaping, to show the shape. Real frames also carry noise, fading and frequency offset.</li>
+</ul>
+</li>
+<li><strong>"2 × 128"</strong> — 2 rows (I, Q) × 128 columns (time): 256 numbers.<ul>
+<li>"The only input" means the network sees <em>nothing else</em>: not the SNR label, not a spectrum.</li>
+<li>Their code first normalizes each of the 128 positions by its mean and variance over the whole dataset. That includes the test frames, a small leak.</li>
+</ul>
+</li>
+<li><strong>Sample rate</strong> — 200 kHz. A frame lasts 0.64 ms, and the symbol rate is 25 kbaud.</li>
+<li><strong>"RML2016.10a"</strong> — Made by O'Shea and West (DeepSig) in GNU Radio, public since 2016. The paper's reference [23].<ul>
+<li>"10b" is a larger version: 10 types, without AM-SSB, and 1.2 million frames.</li>
+<li>Both are simulated, <em>not</em> recorded over the air.</li>
+</ul>
+</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Dataset: Section 2.2 and Table 1, page 3.</li>
+<li>Equation 1 says received = signal + noise; Section 4 (page 5) adds the frequency offsets, fading and multipath.</li>
+<li>The paper writes "BFSK" in its list; it means GFSK, which Table 1 gets right.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"What is SNR in dB?"</em> — "Ten times the log of signal power over noise power. 0 dB is equal power, 10 dB is ten times, −20 dB means the noise is a hundred times stronger."</li>
+<li><em>"What are I and Q?"</em> — "The two outputs of down-conversion, the cosine and sine branches. Together they are one complex sample, which gives amplitude and phase."</li>
+<li><em>"Is 0 dB really 0 dB?"</em> — "It's the dataset's label. We measured it: at label 0 the PSK types are near 5 dB and QAM16 near 14."</li>
+<li><em>"Why are GFSK and CPFSK digital?"</em> — "Their frequency shifts are driven by bits. Analog here means an audio source."</li>
+<li><em>"Is the picture from the dataset?"</em> — "No, it's a clean QAM16 frame we drew to show the shape."</li>
+<li><em>"Does the network see the SNR?"</em> — "No, only the 2-by-128 array. The label is used afterwards, to sort the results."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>The data is the same dataset we use, RML2016.10a: eleven modulation types, eight digital and three analog. Twenty noise levels, from minus 20 to plus 18 dB in steps of 2, and 1,000 frames of each type at each level: 220,000 frames. Each frame is 128 samples of I and 128 of Q. That is the only input; the network sees nothing else.</p>
+</blockquote></div></details><details id="s4"><summary><span class="n">4</span><span>How it works: four steps</span></summary><div class="body"><div class="tag">On the slide</div>
+<ol>
+<li>"Look at short pieces — CNN — short filters slide along the signal"</li>
+<li>"Read them in order — LSTM, both directions — carries a memory from piece to piece" (highlighted)</li>
+<li>"Weigh the pieces — attention — a weighted average of all the pieces"</li>
+<li>"Decide — dense layers — 11 confidence scores, one per type; the largest wins"</li>
+</ol>
+<p>Below the steps:</p>
+<ul>
+<li>"In: 128 samples (I and Q). Out: 11 scores. 794,188 numbers learned, 83% of them in step 2."</li>
+<li>"Step 2, reading the pieces in order, is the heart of it."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>Step 1, "short pieces"</strong><ul>
+<li>Filters 3 samples long slide along the frame. There are 64 filters, then 128.</li>
+<li>A pooling step then halves the length: 128 time steps become <strong>64 pieces</strong>.</li>
+<li>Each piece summarizes about 6 samples, <em>less than one symbol</em>.</li>
+</ul>
+</li>
+<li><strong>Step 2, "read them in order"</strong><ul>
+<li>An LSTM reads the 64 pieces one after another, carrying a memory of 128 numbers. A second LSTM reads them backwards.</li>
+<li>After this step, every piece "knows" the whole frame.</li>
+<li>This is the only step that connects symbols to each other, and a modulation is a pattern <em>across</em> symbols.</li>
+</ul>
+</li>
+<li><strong>Step 3, "weigh the pieces"</strong><ul>
+<li>Each of the 64 pieces gets a weight, and the weights add up to 1.</li>
+<li>The output is the weighted average: one summary vector of 256 numbers for the whole frame.</li>
+</ul>
+</li>
+<li><strong>Step 4, "decide"</strong><ul>
+<li>Two ordinary layers, then 11 outputs. A softmax turns them into 11 positive numbers that add up to 1: the <strong>confidence scores</strong>. The largest is the answer.</li>
+<li><em>Not</em> calibrated probabilities: nobody checked that 0.9 means right 90% of the time.</li>
+</ul>
+</li>
+<li><strong>"794,188 numbers learned"</strong> — The parameter count printed by their code, matching the paper's 0.79 million.<ul>
+<li>Strictly, 792,396 are learned by training; 1,792 are running averages of the normalization layers.</li>
+</ul>
+</li>
+</ul>
+<p><strong>"83% of them in step 2"</strong> — 659,456 of the 794,188 are in the two bidirectional LSTM layers.</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">step</th>
+<th class="nw">numbers</th>
+<th class="nw">share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">CNN</td>
+<td class="nw">25,920</td>
+<td class="nw">3%</td>
+</tr>
+<tr>
+<td class="nw">LSTM</td>
+<td class="nw">659,456</td>
+<td class="nw">83%</td>
+</tr>
+<tr>
+<td class="nw">attention</td>
+<td class="nw">66,177</td>
+<td class="nw">8%</td>
+</tr>
+<tr>
+<td class="nw">dense</td>
+<td class="nw">42,635</td>
+<td class="nw">5%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>"Heart of it"</strong> — Supported by their own experiment (Table 6): the LSTM alone gets 63.13%, the full model 63.24%.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Figure 2 (page 4) and Sections 3.1–3.3 (pages 4–5).</li>
+<li>The sizes come from their code.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"What do the filters learn?"</em> — "We haven't looked inside. They act like a learned FIR filter bank; typically they respond to phase jumps and amplitude steps between neighbouring samples."</li>
+<li><em>"Why read in both directions?"</em> — "The whole frame is available at once, so there's no need to be causal. Reading backwards too means every piece knows what comes before and after."</li>
+<li><em>"Why is step 2 the heart?"</em> — "Telling types apart needs the pattern across symbols, and step 1 sees less than one symbol. Their own ablation agrees: the LSTM alone gets 63.1 of the 63.2."</li>
+<li><em>"What do you mean by confidence?"</em> — "The eleven outputs add up to one; the largest is the answer and its size is how sure it is. It's a score, not a checked probability."</li>
+<li><em>"Why 83 percent?"</em> — "Each LSTM layer has four gate matrices of 128 by its input. Two layers, two directions: 659 thousand numbers."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>How does it work? Four steps. One: it looks at short pieces of the signal, with small filters that slide along it. Two: it reads those pieces in order, forwards and backwards, carrying a memory from piece to piece. Three: it weighs the pieces and takes a weighted average. Four: it gives eleven confidence scores, one per modulation, and the largest wins. Most of the network, 83 percent, is in step two. That is the heart of it.</p>
+</blockquote></div></details><details id="s5"><summary><span class="n">5</span><span>How they trained and tested it</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"70% of the dataset: training — 154,000 — frames with the right answer: it learns from these"</li>
+<li>"15%: validation — 33,000 — frames to decide when to stop learning"</li>
+<li>"15%: testing the classifier — 33,000 — frames kept aside: every result is counted on these"</li>
+<li>"It stopped by itself after 58 passes over the data, when it stopped improving. Done once."</li>
+<li>"The test frames are never used for learning."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>The percentages</strong> — Of the whole dataset of 220,000 frames.</li>
+<li><strong>Training set (154,000)</strong><ul>
+<li>The network sees each frame with its correct type. Its numbers are nudged after every batch of 32 to make the right answer more likely.</li>
+<li>Roughly 700 of the 1,000 frames of each type and label.</li>
+</ul>
+</li>
+<li><strong>Validation set (33,000)</strong><ul>
+<li>After each pass, the error is measured here. It decides when to cut the learning rate and when to stop.</li>
+<li>It is <em>not</em> used to learn the weights.</li>
+</ul>
+</li>
+<li><strong>Test set (33,000)</strong> — Never seen during training or stopping. All reported results are counted here, once, at the end.<ul>
+<li>Why separate: if the stopping decision used the test frames, the reported number would be chosen on itself and come out optimistic.</li>
+</ul>
+</li>
+<li><strong>"58 passes"</strong> — 58 epochs: 58 times through all 154,000 training frames, about 280,000 updates in all.<ul>
+<li><em>Not</em> a number they chose. Their code allows up to 100 and stops when the validation loss has not improved for 6 epochs; for them, that happened at 58.</li>
+</ul>
+</li>
+<li><strong>"Done once"</strong> — One random split, one training run, one number. No spread is reported.<ul>
+<li>Their code draws the split at random, not balanced per type, and the split it draws cannot be reproduced from one run to the next.</li>
+</ul>
+</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>70/15/15: Section 4.1, page 5.</li>
+<li>58 epochs: Table 2, page 6.</li>
+<li>The stopping rule: their code.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"How does it learn?"</em> — "It sees a frame, gives eleven scores, and the scores are compared with the right answer. All its numbers are nudged a little to make the right answer more likely. That's repeated over all training frames, 58 times."</li>
+<li><em>"Why keep a validation set?"</em> — "Stopping and learning-rate decisions need data the network isn't trained on. If you used the test set for that, you'd be choosing the number you report."</li>
+<li><em>"How do you know it's not memorizing?"</em> — "Training accuracy 64.2% and validation 63.6% are almost the same. A memorizing model would be much better on its own training frames."</li>
+<li><em>"Is the split balanced?"</em> — "No, random. Each type at each level gets about 150 test frames, not exactly 150."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>How was it trained and tested? The dataset is split three ways. 70 percent of it, 154,000 frames with the right answer, to learn from. 15 percent, 33,000 frames, to decide when to stop learning. And the last 15 percent, 33,000 frames, kept aside to test the classifier: they are never used for learning, and every result is counted on them. It stopped by itself after 58 passes over the data, and they did it once.</p>
+</blockquote></div></details><details id="s6"><summary><span class="n">6</span><span>Their main table: first by half a point</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>A bar chart of the 12 models' accuracy on RML2016.10a, from their Table 3.</li>
+<li>"63.24 vs 62.73: the runner-up is half a point behind."</li>
+</ul>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">model</th>
+<th class="nw">accuracy</th>
+<th class="nw">what it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">ICRNNA (2025)</td>
+<td class="nw">63.24</td>
+<td class="nw">this paper</td>
+</tr>
+<tr>
+<td>CNN-BiLSTM-DNN (2024)</td>
+<td class="nw">62.73</td>
+<td>CNN + bidirectional LSTM + attention; the closest relative</td>
+</tr>
+<tr>
+<td class="nw">MCLDNN (2020)</td>
+<td class="nw">61.42</td>
+<td>separate convolution branches for I, Q and I/Q together, then an LSTM</td>
+</tr>
+<tr>
+<td class="nw">MAMCA (2024)</td>
+<td class="nw">60.79</td>
+<td>based on Mamba, a state-space sequence model</td>
+</tr>
+<tr>
+<td>PET-CGDNN (2021)</td>
+<td class="nw">60.58</td>
+<td>estimates and removes a phase, then CNN + GRU; very small (72 thousand numbers)</td>
+</tr>
+<tr>
+<td class="nw">DAE (2022)</td>
+<td class="nw">60.22</td>
+<td>an LSTM auto-encoder</td>
+</tr>
+<tr>
+<td class="nw">ResNet (2017)</td>
+<td class="nw">57.10</td>
+<td class="nw">a residual CNN</td>
+</tr>
+<tr>
+<td class="nw">CVCNN</td>
+<td class="nw">56.37</td>
+<td>a complex-valued CNN</td>
+</tr>
+<tr>
+<td>IC-AMCNet (2020)</td>
+<td class="nw">56.30</td>
+<td class="nw">a CNN</td>
+</tr>
+<tr>
+<td class="nw">CGDNet (2021)</td>
+<td class="nw">56.21</td>
+<td>a shallow CNN + GRU</td>
+</tr>
+<tr>
+<td class="nw">MCNet</td>
+<td class="nw">56.20</td>
+<td>a CNN-only model</td>
+</tr>
+<tr>
+<td class="nw">Transformer</td>
+<td class="nw">55.34</td>
+<td>an attention-only model</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>Accuracy</strong> — Over the whole test set, all SNR levels together.</li>
+<li><strong>"First by half a point"</strong> — 0.51 points ahead, from one run. Is that a real lead?<ul>
+<li>The test set alone moves a run by about ±0.3 points.</li>
+<li>Retraining with another seed moves our models by 0.5 to 1.1 points.</li>
+<li>So first and second <em>cannot</em> be told apart. The bigger gaps, 6–8 points to the CNN-only models and the Transformer, are real.</li>
+</ul>
+</li>
+<li><strong>The pattern</strong> — Mostly, models that read the sequence in order (LSTM, GRU, Mamba) are near the top, and pure CNNs and the Transformer are at the bottom. CGDNet, a small CNN + GRU, is the exception.</li>
+<li><strong>Where the other numbers come from</strong> — Not stated. Six of the models also appear with confusion matrices in their Figure 11, so they must have run those. The other five (MAMCA, PET-CGDNN, DAE, CVCNN, Transformer) appear only in this table and are probably taken from other papers.</li>
+<li><strong>The axis starts at 0</strong> — That is deliberate: it shows how small the differences really are.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Table 3, page 6.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Did they retrain the others?"</em> — "The paper doesn't say. Six they clearly ran; five are probably copied from other papers."</li>
+<li><em>"Is half a point significant?"</em> — "Not from one run. The test set alone gives about ±0.3 points, and seeds move a model by half a point to a point."</li>
+<li><em>"Why is the Transformer last?"</em> — "They guess transformers miss local time features, but they don't test it."</li>
+<li><em>"What is MCLDNN?"</em> — "A 2020 model with separate convolution branches for I, Q and both together, followed by an LSTM. We trained it ourselves: 61.4 percent."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Their main result. ICRNNA is first, at 63.24 percent. The next model is half a point behind. The well-known older ones are two to three points behind.</p>
+</blockquote></div></details><details id="s7"><summary><span class="n">7</span><span>Accuracy against SNR (their Figure 8)</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>Their Figure 8: accuracy, F1 score and precision against the SNR label.</li>
+<li>"9% — at −20 dB: chance (1 in 11)"</li>
+<li>"~93% — from 0 dB up"</li>
+<li>"Figure from El-Haryqy et al. 2025 (CC BY-NC 4.0)"</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>The x-axis</strong> — The SNR label, −20 to +18 dB.</li>
+<li><strong>The three curves</strong><ul>
+<li>Accuracy.</li>
+<li>F1 score: precision and recall combined.</li>
+<li>Precision: of the frames called X, the fraction really X, averaged over types.</li>
+<li>All three follow the same shape.</li>
+</ul>
+</li>
+<li><strong>"9% at −20 dB: chance"</strong> — With 11 balanced types, guessing gives 1/11 = 9.1%. At −20 dB the signal is buried and the network is guessing.<ul>
+<li>In practice it dumps almost all frames into one type there. In our runs that type is AM-SSB.</li>
+</ul>
+</li>
+<li><strong>The rise</strong> — Fast between −10 dB (about 25%) and 0 dB (about 92%).</li>
+<li><strong>"~93% from 0 dB up"</strong> — A plateau. More SNR does not help, because the remaining errors are not caused by noise:<ul>
+<li>WBFM against AM-DSB (silences in the audio);</li>
+<li>QAM16 against QAM64 (too few symbols).</li>
+</ul>
+</li>
+<li><strong>Decisions behind each point</strong> — About 1,650: the 33,000 test frames split over 20 levels.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Figure 8 and Section 4.2.2, page 8.</li>
+<li>The text quotes "−5 dB" and "−15 dB", levels that do not exist on the 2-dB grid.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"How many decisions behind each point?"</em> — "About 1,650: the test set split over twenty levels, about 150 per type."</li>
+<li><em>"Why does it stop at 93 and not 100?"</em> — "The remaining errors are WBFM against AM-DSB and QAM16 against QAM64. Neither is fixed by more SNR: one is silence in the audio, the other is too few symbols."</li>
+<li><em>"Why does it jump so fast near 0 dB?"</em> — "That's where the signal starts to stand out. And the label understates the SNR: at label 0 the PSK types are actually near 5 dB."</li>
+<li><em>"What's the difference between precision and recall?"</em> — "Recall: of the real X frames, how many were called X. Precision: of the frames called X, how many really were X."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Accuracy against noise. At the noisiest level it is right 9 percent of the time, which is guessing among eleven. It improves quickly between minus 10 and 0 dB, and from 0 dB up it is right about 93 percent of the time.</p>
+</blockquote></div></details><details id="s8"><summary><span class="n">8</span><span>Where it still fails, at 0 dB (their Figure 11)</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>Their Figure 11 (ICRNNA panel): "SNR = 0 dB, Acc = 92.21%".</li>
+<li>"Test frames labelled 0 dB, about 150 per type (≈1,650). Row: the true type. Column: the classifier's answer. Each row adds up to 100%."</li>
+<li>"57.9% — of WBFM called AM-DSB: about 85 of ~145 frames"</li>
+<li>"~6% — QAM16 ↔ QAM64, each way: about 9 to 10 frames"</li>
+<li>"91.9% — of 8PSK right: 148 of 161 frames. The rest: 7 → QPSK, 3 → QAM16, 2 → AM-SSB, 1 → QAM64"</li>
+<li>"The other seven types are 96 to 100% right at this level."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>How to read it</strong> — Each row is one true type and shows where its frames went. The diagonal is correct. Row percentages are recall.</li>
+<li><strong>What went in</strong> — The test frames with label 0 dB: about 150 per type, about 1,650 in all. The split is random, so rows differ a little.</li>
+<li><strong>Where the frame counts come from</strong> — The paper prints only percentages. 161 is the only 8PSK row size that reproduces all five printed values, which gives 148 / 7 / 3 / 2 / 1. The WBFM and QAM rows fit several sizes, so the slide says "about".</li>
+<li><strong>WBFM → AM-DSB (57.9%)</strong><ul>
+<li>The known explanation: both analog types are made from voice recordings. In silences, both become a bare carrier, which nothing can tell apart.</li>
+<li>The confusion goes one way: AM-DSB itself is 98% right.</li>
+<li>We have <em>not</em> measured this ourselves; it is the explanation given in the literature.</li>
+</ul>
+</li>
+<li><strong>QAM16 ↔ QAM64 (5.7% and 6.1%)</strong> — A frame has only 16 symbols, too few to tell a 16-point grid from a 64-point one every time. In our own shortened-frame runs, QAM16 recall at high SNR falls from 87% (128 samples) to 66% (64) to 46% (32).</li>
+<li><strong>8PSK: 148 of 161 right</strong> — The errors:<ul>
+<li><strong>7 → QPSK.</strong> QPSK is the nearest neighbour: same constant amplitude, and its 4 phases are every other one of 8PSK's 8.<ul>
+<li>8PSK points are 45° apart, so at equal power neighbouring points are 0.77 apart against 1.41 for QPSK. 8PSK needs about 5.3 dB more SNR to be separated as well.</li>
+<li>At this label we measured about 4.7 dB for 8PSK, so the 45° steps blur.</li>
+</ul>
+</li>
+<li><strong>3 → QAM16, 1 → QAM64.</strong> Noise and fading make the amplitude vary, so a single ring can look like several.</li>
+<li><strong>2 → AM-SSB.</strong> The type the classifier falls back on when it cannot see a signal; probably frames caught in a fading dip.</li>
+<li>The reverse is rare: only 0.6% of QPSK is called 8PSK. Sixteen symbols all on 4 of 8 phases is strong evidence for QPSK.</li>
+</ul>
+</li>
+<li><strong>"The other seven types"</strong> — AM-DSB 98.0, AM-SSB 96.1, BPSK 99.3, CPFSK 100, GFSK 98.6, PAM4 99.2, QPSK 99.4.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Figure 11, page 11; text on pages 9–11.</li>
+<li>The text writes "64-QAM 93.%" (a missing digit; the figure shows 93.3).</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"How many signals went in?"</em> — "The test frames labelled 0 dB: about 150 of each type, roughly 1,650. For 8PSK it was 161."</li>
+<li><em>"Explain the 8PSK errors."</em> — "Of 161 8PSK frames, 148 are right. Seven are called QPSK, its nearest neighbour: same amplitude, and QPSK's phases are every other one of 8PSK's. At this noise level the 45-degree steps blur. A few go to the QAM types because fading makes the amplitude vary, and two to AM-SSB, the type it falls back on when it can't see a signal."</li>
+<li><em>"Why is 8PSK the weakest digital type?"</em> — "Its points are closest together: 0.77 apart against 1.41 for QPSK at equal power, so it needs about 5 dB more SNR."</li>
+<li><em>"Why is WBFM called AM-DSB and not the reverse?"</em> — "In the silences of the audio, WBFM becomes a bare carrier, and the classifier calls that AM-DSB. AM-DSB itself is 98 percent right."</li>
+<li><em>"How do you know 161?"</em> — "The paper prints percentages to one decimal; 161 is the only row size that gives all five of them."</li>
+<li><em>"Do other models do better on WBFM?"</em> — "In their figure, yes: MCLDNN 63 percent, ResNet 58, against ICRNNA's 41. No model solves it."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Where does it still make mistakes, at 0 dB? This is their figure. About 150 test frames of each type, labelled 0 dB, went in; each row is one true type, and the columns are what the classifier said. Three weak spots. WBFM is called AM-DSB more than half the time: about 85 of some 145 frames. QAM16 and QAM64 are mixed up, about 6 percent each way. And 8PSK: of 161 frames, 148 are right; 7 are called QPSK, its nearest neighbour, and a few go to the QAM types. The other seven types are 96 to 100 percent right.</p>
+</blockquote></div></details><details id="s9"><summary><span class="n">9</span><span>How much better is it, really?</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"We trained five published models the same way: same data, same split, 3 repeats each."</li>
+</ul>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">model</th>
+<th>right, all noise levels</th>
+<th>right, 10 dB and above</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">ICRNNA (2025)</td>
+<td class="nw">62.2%</td>
+<td class="nw">91.5%</td>
+</tr>
+<tr>
+<td class="nw">LSTM2 (2018)</td>
+<td class="nw">61.4%</td>
+<td class="nw">91.5%</td>
+</tr>
+<tr>
+<td class="nw">MCLDNN (2020)</td>
+<td class="nw">61.4%</td>
+<td class="nw">91.1%</td>
+</tr>
+<tr>
+<td>PET-CGDNN (2021)</td>
+<td class="nw">61.0%</td>
+<td class="nw">90.6%</td>
+</tr>
+<tr>
+<td class="nw">VT-CNN2 (2016)</td>
+<td class="nw">56.1%</td>
+<td class="nw">82.0%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>"First, but only by about one point."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"The same way"</strong> — One recipe for all five models:<ul>
+<li>all 220,000 frames;</li>
+<li>one 70/15/15 split, balanced per type and label;</li>
+<li>three seeds each;</li>
+<li>each trained until it stopped improving.</li>
+</ul>
+</li>
+</ul>
+<p>This is <em>our</em> experiment, not the paper's.</p>
+<p><strong>The five models</strong></p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">model</th>
+<th class="nw">what it is</th>
+<th class="nw">numbers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VT-CNN2 (O'Shea et al., 2016)</td>
+<td>the first deep model on this dataset; convolution only</td>
+<td class="nw">1.59 million</td>
+</tr>
+<tr>
+<td>LSTM2 (Rajendran et al., 2018)</td>
+<td>two LSTM layers reading amplitude and phase instead of I/Q</td>
+<td class="nw">201 thousand</td>
+</tr>
+<tr>
+<td>MCLDNN (Xu et al., 2020)</td>
+<td>separate convolution branches, then an LSTM</td>
+<td class="nw">406 thousand</td>
+</tr>
+<tr>
+<td>PET-CGDNN (Zhang et al., 2021)</td>
+<td>estimates and removes a phase, then CNN + GRU</td>
+<td class="nw">72 thousand</td>
+</tr>
+<tr>
+<td class="nw">ICRNNA</td>
+<td>our working version</td>
+<td class="nw">786 thousand</td>
+</tr>
+</tbody>
+</table></div>
+<p>The four older models were ported from a published benchmark's code.</p>
+<ul>
+<li><strong>"Right, all noise levels"</strong> — Overall accuracy, like the paper's 63.24.</li>
+<li><strong>"Right, 10 dB and above"</strong> — Accuracy on clean signals only.</li>
+<li><strong>"First, but only by about one point"</strong><ul>
+<li>ICRNNA leads in each of the three seeds, but the top four are within 1.25 points.</li>
+<li>Above 10 dB the top four are all near 91%.</li>
+<li>Its real edge is at −6 to −2 dB.</li>
+</ul>
+</li>
+<li><strong>Why ICRNNA shows 62.2 here, not 63.2</strong> — This row is our working version: slightly different from the paper's model, with a different recipe (batches of 256) and our split. It is fair among these five, but it is <em>not</em> the reproduction. Our faithful rebuild gave 63.21.</li>
+<li><strong>Agreement with the papers</strong> — For LSTM2, MCLDNN and PET-CGDNN, our numbers are within one point of the published ones, in both directions. The parameter counts of all four match their sources to the digit.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Not in the paper. This is our check (<code>literature_2016.md</code>).</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Why is ICRNNA 62.2 here and 63.2 elsewhere?"</em> — "This row is our working version, trained with one recipe shared by all five so they can be compared fairly. The rebuild that follows the paper exactly gives 63.21."</li>
+<li><em>"Is one point significant?"</em> — "ICRNNA was first in each seed, so the order is probably real, but in one seed LSTM2 was only a tenth of a point behind. It's a small gain."</li>
+<li><em>"Why is VT-CNN2 so far behind?"</em> — "It has no step that reads in order. Every model with a recurrent layer closes that six-point gap."</li>
+<li><em>"Why are they all near 91% above 10 dB?"</em> — "That's the ceiling of the data: WBFM against AM-DSB and QAM16 against QAM64. No model fixes those."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>How much better is it, really? We trained five published models the same way: same data, same split, three repeats each. ICRNNA is first, but only by about one point. At 10 dB and above, the best four are all about 91 percent.</p>
+</blockquote></div></details><details id="s10"><summary><span class="n">10</span><span>In short</span></summary><div class="body"><div class="tag">On the slide</div>
+<ol>
+<li>"A neural network in four steps; step 2, reading in order, does most of the work."</li>
+<li>"Its 63.24% is real: we get 63.21% from the paper alone."</li>
+<li>"It is about one point better than older models, not a big jump."</li>
+</ol>
+<p>"For us: a solid classifier to build on."</p>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>Point 1</strong> — Slide 4: the LSTM holds 83% of the numbers, and their ablation shows it alone gets almost all the accuracy.</li>
+<li><strong>Point 2</strong> — Our faithful rebuild, written from the paper's text before their code existed, reached 63.21%.<ul>
+<li>It is <strong>one run</strong>, trained until it stopped improving, best at epoch 107. At a fixed 58 epochs, three runs gave 61.75%.</li>
+<li>The detail is in backup slides 19–20.</li>
+</ul>
+</li>
+<li><strong>Point 3</strong> — Slide 9.</li>
+<li><strong>"A solid classifier to build on"</strong> — Its numbers are reproducible and it is at the top of the field, so it is a sound base for our domain-gap work.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"How many runs gave 63.21?"</em> — "One, trained to the end. At the paper's fixed 58 epochs, three runs gave 61.75."</li>
+<li><em>"What's next for you?"</em> — "Using this classifier for my main question: how much accuracy is lost when the test signals come from a different source than the training ones. The paper never tests that."</li>
+<li><em>"Would it work on real signals?"</em> — "Unknown. The paper only tests on this simulated dataset, and that's exactly my research question."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>To sum up. It is a neural network in four steps, and step two, reading in order, does most of the work. Its 63.24 percent is real: we get 63.21 from the paper alone. And it is about one point better than older models, not a big jump. For us, it is a solid classifier to build on. Thank you. I have more detail on each step if you'd like.</p>
+</blockquote></div></details><details id="s11"><summary><span class="n">11</span><span>Backup</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"Details, if asked."</li>
+<li>"Each step of the model, the training recipe, their code, and what we checked in their tables."</li>
+</ul>
+<div class="tag">What it means</div>
+<p>Show these slides only if a question leads there:</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">slides</th>
+<th class="nw">topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">12</td>
+<td>the model with its sizes</td>
+</tr>
+<tr>
+<td class="nw">13–16</td>
+<td class="nw">each block</td>
+</tr>
+<tr>
+<td class="nw">17</td>
+<td>the training recipe</td>
+</tr>
+<tr>
+<td class="nw">18</td>
+<td>what their code tells us</td>
+</tr>
+<tr>
+<td class="nw">19</td>
+<td class="nw">"58 epochs"</td>
+</tr>
+<tr>
+<td class="nw">20</td>
+<td class="nw">our rebuild</td>
+</tr>
+<tr>
+<td class="nw">21</td>
+<td>claims their tables don't support</td>
+</tr>
+<tr>
+<td class="nw">22</td>
+<td>what the paper doesn't say</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Backup slides with the details, if you want to go deeper.</p>
+</blockquote></div></details><details id="s12"><summary><span class="n">12</span><span>The model at a glance</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>A flow: "frame 2 × 128 → CNN 64 × 128 → BiLSTM 64 × 256 → Attention 256 → Dense 128 → 64 → output 11"</li>
+<li>"size of what comes out"</li>
+<li>"One frame in, eleven probabilities out. The largest is the answer."</li>
+<li>"Redrawn from their Fig. 2; sizes from their code."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>Reading the sizes</strong> — "time steps × numbers per step".<ul>
+<li><strong>2 × 128 (frame)</strong> — I and Q over 128 samples. Their code turns it to 128 × 2, time first.</li>
+<li><strong>64 × 128 (after the CNN)</strong> — 64 time steps (after pooling), each described by 128 filter outputs.</li>
+<li><strong>64 × 256 (after the BiLSTM)</strong> — Still 64 steps, now 128 numbers from each direction.</li>
+<li><strong>256 (after attention)</strong> — The 64 steps averaged into one vector.</li>
+<li><strong>128 → 64 (dense)</strong> — Two ordinary layers shrinking the summary.</li>
+<li><strong>11 (output)</strong> — One probability per type.</li>
+</ul>
+</li>
+<li><strong>"Eleven probabilities"</strong> — The softmax outputs: positive and adding up to 1. The same thing as the "confidence scores" of slide 4.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Figure 2, page 4. The paper does not print the sizes; we read them from their code.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Why does the length go from 128 to 64?"</em> — "One pooling step keeps the larger of each pair of neighbours. It halves the work for the LSTM."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Here is the whole model. A frame of 2 by 128 goes in. Four blocks process it. Eleven probabilities come out, one per modulation, and the largest is the answer. Below each block I wrote the size of what comes out of it, so you can follow one frame through. I'll now take the blocks one at a time.</p>
+</blockquote></div></details><details id="s13"><summary><span class="n">13</span><span>Block 1: short learned filters</span></summary><div class="body"><div class="tag">On the slide</div>
+<ol>
+<li>"64 filters, 3 taps — 2 × 128 → 128 × 64"</li>
+<li>"128 filters, 3 taps — → 128 × 128"</li>
+<li>"pool: larger of each pair — → 64 × 128"</li>
+</ol>
+<p>Also on the slide:</p>
+<ul>
+<li>"samples →" and "one output per sample, per filter" (an illustration).</li>
+<li>"Like an FIR filter whose taps are learned instead of designed."</li>
+<li>"Each of the 64 steps sums up about 6 samples: less than one symbol."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"64 filters, 3 taps"</strong><ul>
+<li>Each filter looks at 3 consecutive samples of both I and Q: 3 × 2 = 6 weights plus one offset.</li>
+<li>Sliding it along gives one output per sample, so 64 filters give 128 × 64.</li>
+<li>This layer has 448 numbers.</li>
+</ul>
+</li>
+<li><strong>"128 filters, 3 taps"</strong> — The same again on the 64 outputs: 3 × 64 × 128 + 128 = 24,704 numbers. The result is 128 × 128.</li>
+<li><strong>After each filter</strong> — ReLU (negatives set to zero) and batch normalization.</li>
+<li><strong>"Pool: larger of each pair"</strong> — Max pooling with size 2: 128 steps → 64.<ul>
+<li>It keeps the strongest response and gives up the exact position.</li>
+<li>Then dropout of 30% during training.</li>
+</ul>
+</li>
+<li><strong>"Like an FIR filter"</strong> — Same arithmetic as a finite impulse response filter: multiply and add over a short window.<ul>
+<li>The taps are <em>learned</em> from data, <em>not</em> designed for a passband.</li>
+<li>Unlike a single FIR filter, it is followed by a non-linearity.</li>
+</ul>
+</li>
+<li><strong>"About 6 samples, less than one symbol"</strong> — Two 3-tap layers see 5 samples; pooling adds one, so 6. A symbol is 8 samples. So this block <em>cannot</em> see the pattern between symbols; that is left to the LSTM.</li>
+<li><strong>Total</strong> — 25,920 numbers, 3% of the model.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Section 3.1 and Figure 2, page 4.</li>
+<li>The text never gives the kernel size; only Figure 2 does (3).</li>
+<li>The text's Equation 3 is a 2-D image convolution, not the 1-D one the model uses.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Why 3 taps?"</em> — "Their design choice; the paper doesn't justify it."</li>
+<li><em>"What about the edges of the frame?"</em> — "Zero-padded, so the length stays 128."</li>
+<li><em>"Is there a non-linearity?"</em> — "Yes, ReLU after each filter. Without it, stacked filters would collapse into one linear filter."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Block one: two convolution layers. A convolution here is a short filter, three samples long, slid along the frame, like an FIR filter whose taps are learned instead of designed. The first layer has 64 such filters, the second 128. So every time step is now described by 128 numbers. Then a pooling step keeps the larger of each pair of neighbours, so 128 time steps become 64. Each of the 64 steps summarizes about 6 samples, less than one symbol.</p>
+</blockquote></div></details><details id="s14"><summary><span class="n">14</span><span>Block 2: reading the steps in order</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>A row of "step 1 … step 64" with two arrows: "forwards, with a memory" and "backwards, a second LSTM".</li>
+<li>"2 layers, 128 numbers each way → 64 × 256"</li>
+<li>"83% — of the model's numbers are here"</li>
+<li>"After this block, every step knows the whole frame."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>LSTM</strong> — Reads the 64 steps one at a time and keeps a state of 128 numbers. At each step, three learned gates decide:<ul>
+<li>how much of the old state to keep (forget);</li>
+<li>what to add from the new step (input);</li>
+<li>what to pass on (output).</li>
+</ul>
+</li>
+</ul>
+<p>It is a learned, non-linear recursive filter: like an IIR filter, but with a learned, gated state.
+- <strong>"Backwards, a second LSTM"</strong> — Bidirectional: one LSTM reads 1 → 64, another reads 64 → 1. Their outputs sit side by side: 128 + 128 = 256 per step.
+- <strong>"2 layers"</strong> — The second bidirectional LSTM reads the first one's outputs.
+    - After each layer: batch normalization, then 30% dropout during training.
+- <strong>"83%"</strong> — 659,456 numbers. Each layer has four gate matrices of size 128 × (input + 128), per direction.
+    - First layer: 263,168.
+    - Second layer: 394,240.
+    - Plus normalization.
+- <strong>"Every step knows the whole frame"</strong> — The forward state has seen everything before a step and the backward state everything after it. How much it actually keeps cannot be seen directly.</p>
+<div class="tag">In the paper</div>
+<ul>
+<li>Section 3.2, pages 4–5.</li>
+<li>The text swaps two words: it says "past (backward) and future (forward)". In fact the forward LSTM carries the past and the backward one the future.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"What are the gates?"</em> — "Three learned switches between 0 and 1: how much of the old state to keep, how much of the new step to add, and how much to pass on."</li>
+<li><em>"Why two layers?"</em> — "The second combines longer patterns from the first. The paper doesn't justify two rather than one or three."</li>
+<li><em>"Why does this part matter most?"</em> — "A modulation is a pattern across symbols. This is the only block that reads across them; alone it reaches 63.1 percent in their ablation."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Block two: two bidirectional LSTM layers. An LSTM reads the 64 steps in order, one at a time, and carries a memory from step to step. Bidirectional means a second LSTM reads the same steps backwards. So at every step, the output knows what came before and what comes after: 128 numbers from each direction, 256 in total. This block holds 83 percent of the model's numbers.</p>
+</blockquote></div></details><details id="s15"><summary><span class="n">15</span><span>Block 3: a learned weighted average</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"a weight for each of the 64 steps; they add up to 1" (an illustration).</li>
+<li>The formulas:<ul>
+<li>"score = v · tanh(W₁q + W₂k)"</li>
+<li>"weights = softmax(score)"</li>
+<li>"output = Σ weightₜ · stepₜ"</li>
+</ul>
+</li>
+<li>"'Improved' (from their code): a learned scale on the scores · dropout 0.1 on the weights · normalization of the output"</li>
+<li>"64 steps in, one vector of 256 out: the frame's summary."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>The formula, piece by piece</strong><ul>
+<li><strong>q and k</strong> — In their code both come from the second LSTM's output at the same step.<ul>
+<li>q is the normalized and dropped-out version; k (and the value being averaged) is the raw output.</li>
+<li>So each step is scored on its own content. Steps are <em>not</em> compared with each other.</li>
+</ul>
+</li>
+<li><strong>W₁, W₂</strong> — Learned matrices, 256 → 128 each, without offsets.</li>
+<li><strong>tanh</strong> — Squashes values into −1 … +1.</li>
+<li><strong>v</strong> — A learned vector, 128 → 1, that turns the result into one score per step.</li>
+<li><strong>softmax</strong> — Turns the 64 scores into 64 positive weights that add up to 1.</li>
+<li><strong>Σ weightₜ · stepₜ</strong> — The weighted average of the 64 step vectors: one vector of 256.</li>
+</ul>
+</li>
+<li><strong>"Improved", three additions</strong><ol>
+<li><strong>A learned scale</strong> — All scores are multiplied by one learned number, starting at 1. This sets how sharp the weights are.</li>
+<li><strong>Dropout 0.1 on the weights</strong> — During training, 10% of the weights are randomly zeroed.</li>
+<li><strong>Normalization of the output</strong> — Layer normalization of the 256-number summary.</li>
+</ol>
+</li>
+<li><strong>Size</strong> — 66,177 numbers (8%): W₁ 32,768 + W₂ 32,768 + v 128 + scale 1 + normalization 512.</li>
+<li><strong>What it is not</strong><ul>
+<li><em>Not</em> the transformer attention of ChatGPT: that compares every step with every other.</li>
+<li><em>Not</em> shown to be interpretable: the paper never plots the weights.</li>
+</ul>
+</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Section 3.3 and Equations 4–6, page 5. The paper describes query, key and value in general textbook terms; which input is which comes from their code.</li>
+<li>Its contribution in the ablation (Table 6): without attention 62.80, with attention 63.24, i.e. +0.44 points from one run.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"What does attention do here?"</em> — "A learned weighted average over the 64 steps. Each step gets a score, a softmax turns the scores into weights, and the steps are averaged into one vector."</li>
+<li><em>"What would you do without it?"</em> — "Take the last step or a plain average. In their ablation that costs about half a point."</li>
+<li><em>"Where does it look?"</em> — "Nobody has shown it, the paper included. It would be a good check to plot the weights."</li>
+<li><em>"Why additive?"</em> — "The two transformed vectors are added inside a tanh, rather than multiplied as in transformer attention."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Block three: attention. Each of the 64 steps gets a score from a small learned network. A softmax turns the scores into weights that add up to one. The output is the weighted average of the 64 steps: one vector of 256 numbers for the whole frame. The paper calls it improved because of three additions. From their code we now know exactly what they are: a learned scale on the scores, dropout on the weights, and a normalization of the result.</p>
+</blockquote></div></details><details id="s16"><summary><span class="n">16</span><span>Block 4: the decision</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>A bar illustration with the 11 type names.</li>
+<li>"256 → 128 → 64 → 11 probabilities; the largest wins (illustration)"</li>
+<li>A pie: "BiLSTM 83% · Attention 8% · Dense 5% · CNN 3%"</li>
+<li>"794,188 numbers in total"</li>
+<li>"Most of the model is the LSTM."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>Dense 256 → 128 → 64</strong> — Two fully connected layers, each followed by ReLU, batch normalization and 30% dropout.</li>
+<li><strong>→ 11</strong> — The output layer, one number per type; a softmax turns them into probabilities.</li>
+<li><strong>"The largest wins"</strong> — The answer is the type with the highest probability. Nothing else is used: no threshold, no "unsure" answer.</li>
+<li><strong>"(illustration)"</strong> — The bars on the slide are drawn to show the idea. They are <em>not</em> a real output.</li>
+<li><strong>The pie</strong> — Where the 794,188 numbers sit. The dense part is 42,635 numbers (5%).</li>
+<li><strong>Total</strong> — 794,188 (paper: 0.79 M). 792,396 are trained; 1,792 are normalization statistics.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Figure 2 (Part D), page 4.</li>
+<li>The paper's Table 7 claims the model is far smaller than MCLDNN. That holds only because Table 7 misprints MCLDNN's size (slide 21).</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Are the probabilities calibrated?"</em> — "Not checked, by them or by us. Only the largest is used."</li>
+<li><em>"Is 794 thousand a lot?"</em> — "For this field it's mid-sized: about twice MCLDNN and eleven times PET-CGDNN, which score within about a point of it in our comparison."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Block four: the decision. Two ordinary layers, 128 and 64 numbers, and then 11 outputs. A softmax turns them into probabilities, and the largest one is the answer. In total the model has 794 thousand numbers. The pie shows where they are: almost all in the LSTM.</p>
+</blockquote></div></details><details id="s17"><summary><span class="n">17</span><span>How it is trained</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li><strong>DATA:</strong> "70% learn: 154,000 frames · 15% watch: 33,000 · 15% test: 33,000"</li>
+<li><strong>LOOP:</strong> "batches of 32 frames · 4,813 steps per epoch · loss: cross-entropy · Adam, learning rate 0.001"</li>
+<li><strong>STOPPING:</strong> "loss flat 5 epochs: rate × 0.2 · loss flat 6 epochs: stop · at most 100 epochs"</li>
+<li>"58 — where it stopped"</li>
+<li>"Trained once: one split, one run."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"Watch"</strong> — The validation set.</li>
+<li><strong>"Batches of 32"</strong> — 32 frames go through the network together and give one update.</li>
+<li><strong>"4,813 steps per epoch"</strong> — 154,000 / 32 = 4,812.5, rounded up.</li>
+<li><strong>"Loss: cross-entropy"</strong> — For each frame, minus the log of the probability given to the right type, averaged. Lower is better; a perfect, confident answer gives 0.</li>
+<li><strong>"Adam, learning rate 0.001"</strong> — The optimizer and its starting step size.</li>
+<li><strong>"Loss flat 5 epochs: rate × 0.2"</strong> — If the validation loss has not improved for 5 epochs, the step size is cut to one fifth.<ul>
+<li>The paper's text says this happened at epoch 43 (0.001 → 0.0002), and the rate was 0.00004 by epoch 58.</li>
+</ul>
+</li>
+<li><strong>"Loss flat 6 epochs: stop"</strong> — Early stopping, then the weights from the best epoch are restored.</li>
+<li><strong>"At most 100 epochs"</strong> — The ceiling in their code. It was never reached.</li>
+<li><strong>"58: where it stopped"</strong> — Not a chosen budget, although the paper's Table 2 lists it as "Number of Epochs".</li>
+<li><strong>Also in their code, not in the paper</strong><ul>
+<li>Gradient clipping (<code>clipnorm=1.0</code>).</li>
+<li>L2 penalty 1e-4 on the convolution, LSTM and dense weights.</li>
+</ul>
+</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Table 2, page 6, and Section 4.1, page 5.</li>
+<li>The stopping rule and ceiling come from their code.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Why stop on the loss and not the accuracy?"</em> — "It's the usual default. The two can disagree: here the loss had flattened while accuracy was still creeping up. That's backup slide 19."</li>
+<li><em>"Why cut the learning rate?"</em> — "When progress stalls, smaller steps let the weights settle into a better point."</li>
+<li><em>"How long does it take?"</em> — "On a Colab GPU, our runs of their code took 133 to 150 minutes each."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>How it is trained. Seventy percent of the frames to learn from, fifteen to watch, fifteen to test. Batches of 32 frames; the loss is cross-entropy; the optimizer is Adam with learning rate 0.001. When the validation loss stops improving for 5 epochs, the learning rate is cut by five. When it stops improving for 6 epochs, training stops and the best weights are restored. The paper's table says 58 epochs. From their code we now know that 58 is where this stopping rule fired, not a number they chose. They trained once.</p>
+</blockquote></div></details><details id="s18"><summary><span class="n">18</span><span>What their code tells us</span></summary><div class="body"><div class="tag">On the slide</div>
+<ol>
+<li>"The model is the one in the paper — same layers, 794,188 numbers (paper: 0.79 M)"</li>
+<li>"'58 epochs' was not a choice — training stops by itself when it stops improving; for them, at 58"</li>
+<li>"They trained it once — one split of the data, one run, one number"</li>
+</ol>
+<p>"One run gives one number: how much would it move?"</p>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>Their code</strong><ul>
+<li>Published on GitHub on 8 August 2026, sixteen months after the paper, under the account noureddine395.</li>
+<li>The README names all five authors; MIT licence; archived on Zenodo.</li>
+<li>TensorFlow/Keras. <em>No trained weights.</em></li>
+</ul>
+</li>
+<li><strong>Point 1</strong> — The layers in the code match Figure 2 exactly.</li>
+<li><strong>Point 2</strong> — The code allows up to 100 epochs and stops on the validation loss.</li>
+<li><strong>Point 3</strong> — The script has no loop over seeds, and its split cannot even be repeated: it depends on Python's internal ordering of class names, which changes from one run to the next.</li>
+<li><strong>"How much would it move?"</strong> — We answered this afterwards: three runs of their code on one fixed split gave <strong>62.71, 62.45 and 62.52%</strong>, i.e. 62.56 ± 0.11. Every run is below their 63.24.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Not in the paper. See <code>OFFICIAL_CODE.md</code>.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"How do you know it's really theirs?"</em> — "It's on an account named after the first author, the README names all five authors and calls it the official code, and it builds exactly the paper's layers."</li>
+<li><em>"Did you run it?"</em> — "Three times, unchanged, on one fixed split: 62.71, 62.45 and 62.52 percent, against their single 63.24. Training stopped by itself at epochs 57 to 64, at the same validation accuracy as theirs."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>What does their code tell us? Three things. First, the model in the code is the model in the paper: same layers, 794 thousand numbers. Second, the 58 epochs in the paper were not a choice: the training stops by itself when it stops improving, and for them that happened at 58. Third, they trained it once: one split of the data, one run, one number. And one run leaves a question: how much would that number move if you ran it again?</p>
+</blockquote></div></details><details id="s19"><summary><span class="n">19</span><span>What &quot;58 epochs&quot; means</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>"61.75% — our rebuild at a fixed 58 epochs (3 runs)"</li>
+<li>"63.21% — the same, left to run: best at epoch 107"</li>
+<li>Their Figure 7: "accuracy still rising at 58"</li>
+<li>"Their rule stopped on the loss; the accuracy was still climbing."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"Our rebuild"</strong> — The model we wrote from the paper's text before their code existed (slide 20).</li>
+<li><strong>"61.75% at a fixed 58 epochs (3 runs)"</strong> — Trained for exactly 58 epochs, as Table 2 seemed to say: 61.75 ± 0.07.</li>
+<li><strong>"63.21%, best at epoch 107"</strong> — The same model, allowed up to 150 epochs, peaked at 107. <strong>One run.</strong></li>
+<li><strong>Their Figure 7</strong> — Validation accuracy is still rising at epoch 58 (63.59%), while their text says the validation loss had flattened near 1.05 after epoch 40.</li>
+<li><strong>Why loss and accuracy disagree</strong> — The loss also punishes <em>confident wrong answers</em>; accuracy only counts which answer is largest. The model can get more frames right while growing over-confident on the ones it gets wrong, so accuracy rises while the loss stays flat.</li>
+<li><strong>What it is not</strong><ul>
+<li><em>Not</em> evidence that they stopped wrongly: their rule watches the loss, and the loss had stopped improving.</li>
+<li>Our rebuild needed longer partly because of a different recipe: no gradient clipping, a different normalization, and stopping on accuracy.</li>
+</ul>
+</li>
+<li><strong>What their own code showed later</strong> — Run with their own rule, it stopped at epochs 57, 61 and 64 and gave 62.56% on average.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Figure 7 and Section 4.2.2, page 8.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"So did they stop too early?"</em> — "By their rule, no; it watches the loss. By accuracy, maybe slightly. Our rebuild gained 1.5 points by continuing, but with our recipe."</li>
+<li><em>"How many runs at epoch 107?"</em> — "One."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>One detail about the 58 epochs. Their stopping rule watches the validation loss, and the loss had flattened. But the validation accuracy, in their own figure on the right, is still rising at 58. When I trained our rebuild for a fixed 58 epochs, I got 61.75 percent. Letting it continue, it peaked at epoch 107 at 63.21. So their number is real, but it sits where the accuracy was still climbing.</p>
+</blockquote></div></details><details id="s20"><summary><span class="n">20</span><span>We rebuilt it; their code agrees</span></summary><div class="body"><div class="tag">On the slide</div>
+<ul>
+<li>A timeline: "Apr 2025 — paper, no code · Aug 2026 — their code on GitHub, no weights · Sep 2026 — our rebuild from the paper alone"</li>
+<li>"63.21% — our rebuild, trained to the end (paper: 63.24%)"</li>
+<li><strong>MATCHED THEIR CODE:</strong> "one pooling step · normalization after each LSTM · dropout on attention weights · size: 794,827 vs 794,188"</li>
+<li><strong>MISSED:</strong> "exact attention form and its learned scale · input normalization · gradient clipping"</li>
+<li>"Their 63.24% is reproducible from the paper alone."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"Our rebuild from the paper alone"</strong> — Written in PyTorch from the paper's text and Figure 2 (<code>colab/icrnna_faithful_2016.py</code>).</li>
+<li><strong>Matched</strong> — Three things the text left unclear, which we read right:<ul>
+<li>one pooling step, not two;</li>
+<li>batch normalization after each LSTM layer, not once after both;</li>
+<li>dropout on the attention weights.</li>
+</ul>
+</li>
+<li><strong>"794,827 vs 794,188"</strong> — Within 0.1%.<ul>
+<li>The small difference comes from building the attention slightly differently.</li>
+<li>The two programs also count differently: Keras includes the normalization statistics, PyTorch does not.</li>
+</ul>
+</li>
+<li><strong>Missed</strong> — Three details the code settled:<ul>
+<li><strong>Attention form and learned scale:</strong> the two-input form and the single learned multiplier.</li>
+<li><strong>Input normalization:</strong> per-position mean and variance over the whole dataset.</li>
+<li><strong>Gradient clipping:</strong> each update capped at length 1.</li>
+</ul>
+</li>
+<li><strong>"Reproducible from the paper alone"</strong> — The model and its accuracy can be rebuilt from the text: 63.21 against 63.24.</li>
+<li><strong>The caveat</strong> — 63.21 is one run, and their own code averages 62.56 on our split. So reproducible means "the same level, within about half a point", <em>not</em> the same digits.</li>
+</ul>
+<div class="tag">In the paper</div>
+<ul>
+<li>Not in the paper. See <code>OFFICIAL_CODE.md</code>.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Did the misses matter?"</em> — "Not much: trained to the end, our build lands within 0.03 points of their number."</li>
+<li><em>"Why did you rebuild it before the code came out?"</em> — "The paper said 'available on request' and there was no code. A rebuild was the only way to check the number."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Before we knew any code existed, I rebuilt the model from the paper's text alone. Its size matched: 794,827 numbers. In August the authors released their code, and it confirms our reading: one pooling step, normalization after each LSTM, dropout on the attention weights. We missed a few details: the exact form of the attention, the input normalization, and gradient clipping. Trained until it stopped improving, our rebuild reached 63.21 percent, against their 63.24.</p>
+</blockquote></div></details><details id="s21"><summary><span class="n">21</span><span>Three claims their own tables don&#x27;t support</span></summary><div class="body"><div class="tag">On the slide</div>
+<ol>
+<li>"'Best at low SNR' — Table 5: beaten at −10, −8 and −6 dB"</li>
+<li>"'Full model has the highest precision' — Table 6: LSTM alone is higher, 0.768 vs 0.754"</li>
+<li>"'MCLDNN: 406 million parameters' — It has 406,199: 0.41 million"</li>
+</ol>
+<p>"ICRNNA is about twice MCLDNN's size, not smaller."</p>
+<div class="tag">What it means</div>
+<p><strong>Claim 1: "best at low SNR"</strong> — Their own Table 5 (page 9):</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th class="nw">label</th>
+<th class="nw">ICRNNA</th>
+<th>higher than ICRNNA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">−10 dB</td>
+<td class="nw">25.32</td>
+<td>CNN-BiLSTM-DNN 27.73</td>
+</tr>
+<tr>
+<td class="nw">−8 dB</td>
+<td class="nw">37.45</td>
+<td>CNN-BiLSTM-DNN 39.55, MCLDNN 38.09, MCNet 38.00</td>
+</tr>
+<tr>
+<td class="nw">−6 dB</td>
+<td class="nw">55.26</td>
+<td>MCLDNN 56.32, CNN-BiLSTM-DNN 56.18, MCNet 56.00</td>
+</tr>
+<tr>
+<td class="nw">+4 dB</td>
+<td class="nw">93.02</td>
+<td>CNN-BiLSTM-DNN 93.18</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>ICRNNA leads only at −4, −2, 0 and +2 dB, and there by 3–4 points.</li>
+<li>
+<p>On the 10b dataset (Table 4) it does lead at every level, by small margins.</p>
+</li>
+<li>
+<p><strong>Claim 2: "highest precision"</strong> — Their own Table 6 (page 13): precision is 0.7676 for the LSTM-only model against 0.7536 for the full model. On 10b it is 0.7200 against 0.7100. So the claim fails on both datasets.</p>
+<ul>
+<li>Precision (of type X) means: of the frames called X, the fraction really X.</li>
+</ul>
+</li>
+<li><strong>Claim 3: "MCLDNN 406 M"</strong> — Their Table 7 lists MCLDNN at 406 million parameters. We built MCLDNN from its published code and counted <strong>406,199</strong>, i.e. 0.41 million; every source agrees to the digit. The table also lists PET-CGDNN at 79.2 M, while it has 71,871.</li>
+<li><strong>The takeaway</strong> — 794 thousand is about twice MCLDNN's 406 thousand. The paper's "smaller and more efficient" rests on that misprint.</li>
+<li><strong>What it is not</strong> — <em>Not</em> proof that the model is bad. The model and the headline number hold up; the text oversells its own tables.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"Show me the low-SNR claim."</em> — "Their Table 5: at −10 dB CNN-BiLSTM-DNN has 27.7 against 25.3; at −8 and −6, three models are higher. ICRNNA leads from −4 to +2 dB, by three to four points."</li>
+<li><em>"How do you know 406,199?"</em> — "We built MCLDNN from its published code and counted; every source agrees to the digit."</li>
+<li><em>"Any other errors?"</em> — "Small ones: two different overall accuracies in the text, 63.39 and 63.24; a '−5 dB' level that doesn't exist; GFSK written as BFSK."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>Reading their tables closely, three statements in the text don't match their own numbers. Best at low SNR: in their Table 5, other models are higher at minus 10, minus 8 and minus 6 dB. Highest precision: in Table 6, the LSTM-only model is higher. And MCLDNN is listed with 406 million parameters; it has 406 thousand. So ICRNNA is about twice the size of MCLDNN, not smaller.</p>
+</blockquote></div></details><details id="s22"><summary><span class="n">22</span><span>What the paper doesn&#x27;t tell us</span></summary><div class="body"><div class="tag">On the slide</div>
+<ol>
+<li>"One run — no spread; our seeds vary by up to a point"</li>
+<li>"Baselines — retrained on the same split, or copied from their papers?"</li>
+<li>"SNR label — taken as the true SNR"</li>
+</ol>
+<p>Also on the slide:</p>
+<ul>
+<li>"+9 dB — more signal in QAM16 than in QPSK, both labelled 0 dB (measured in the file)"</li>
+<li>"A half-point lead from one run may not be real."</li>
+</ul>
+<div class="tag">What it means</div>
+<ul>
+<li><strong>"One run, no spread"</strong><ul>
+<li>The paper reports one training run per model.</li>
+<li>In our three-seed runs, the overall accuracy of one model moves by 0.5 points (ICRNNA) to 1.1 points (LSTM2).</li>
+<li>Their own code, run three times by us, moves by 0.26 points and averages 0.7 below their number.</li>
+</ul>
+</li>
+<li><strong>"Baselines"</strong> — They never say whether the other models were retrained on the same split or taken from their papers. Published numbers for the same model already differ by about half a point between papers: MCLDNN is 62.08 in one paper and 61.42 in this one.</li>
+<li><strong>"SNR label taken as the true SNR"</strong> — The paper treats "0 dB" as "signal and noise equal". In this file, at label 0, measured SNR is about 5 dB for QPSK and 14 dB for QAM16.</li>
+<li><strong>"+9 dB"</strong> — 14.0 − 5.1 = 8.9 dB. QAM16 frames carry about eight times more signal power relative to noise than QPSK frames with the same label.<ul>
+<li>The cause: the generator did not scale the constellations to equal power, and an integer QAM grid has about 10 dB more average power than QPSK.</li>
+<li>"Measured in the file": we estimated the noise from the part of the spectrum outside the signal band, over 1,000 frames per type and label. The method was checked to within half a dB on frames of known SNR.</li>
+</ul>
+</li>
+<li><strong>"A half-point lead from one run may not be real"</strong> — Back to slide 6.</li>
+</ul>
+<div class="tag">If asked</div>
+<ul>
+<li><em>"How did you measure +9 dB?"</em> — "In the dataset file itself. The digital signals occupy only part of the band, so the spectrum outside it is pure noise; that gives the noise level, and the rest is signal."</li>
+<li><em>"So is comparing classes at one label unfair?"</em> — "Across classes, yes: they don't share an SNR. Between models it's fair, since every model sees the same frames."</li>
+</ul>
+<div class="tag">Say it in 30 seconds</div>
+<blockquote>
+<p>And three things the paper doesn't tell us. It reports one training run, with no spread; across seeds we see up to a point of variation, so a half-point lead may not be real. It doesn't say whether the other models were retrained or copied from their papers. And it treats the SNR label as a true SNR; in this data, at label 0 dB, QAM16 has about 9 dB more signal than QPSK.</p>
+</blockquote></div></details><details id="x24"><summary><span class="n">!</span><span>Traps: things not to say</span></summary><div class="body"><ul>
+<li><strong>"Detector."</strong> Say <strong>classifier</strong>. Detection means deciding whether a signal is present at all.</li>
+<li><strong>"0 dB means signal and noise are equal."</strong> In this dataset it is a label; at label 0 the PSK types are near 5 dB.</li>
+<li><strong>"It is 63% accurate."</strong> Say "63% over all noise levels together; about 93% from 0 dB up".</li>
+<li><strong>"It is the best at low SNR."</strong> Their own Table 5 contradicts that at −10, −8 and −6 dB.</li>
+<li><strong>"It is smaller than MCLDNN."</strong> It is about twice as large; the table misprints MCLDNN.</li>
+<li><strong>"Our classifier is the published architecture."</strong> Ours differs in five small places. The faithful rebuild is a separate model.</li>
+<li><strong>"We get 63.21 every time."</strong> One run. At a fixed 58 epochs, three runs gave 61.75. Their own code gives 62.56 on average.</li>
+<li><strong>"The picture on slide 3 is from the dataset."</strong> It is a clean QAM16 frame we drew.</li>
+<li><strong>"The attention shows where the model looks."</strong> Nobody has plotted it.</li>
+<li><strong>"58 epochs was their choice."</strong> 58 is where early stopping fired.</li>
+<li><strong>"We measured the WBFM silence effect."</strong> It is the known explanation from the literature; we have not measured it.</li>
+<li><strong>When you don't know:</strong> "The paper doesn't say" or "I haven't measured that; I can check." Both are good answers.</li>
+</ul></div></details><details id="x25"><summary><span class="n">+</span><span>Since the talk: their code, three runs</span></summary><div class="body"><p>The authors' own code, run unchanged by us on Colab, three seeds on one fixed split:</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th></th>
+<th class="nw">run 1</th>
+<th class="nw">run 2</th>
+<th class="nw">run 3</th>
+<th class="nw">paper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="nw">test accuracy</td>
+<td class="nw">62.71%</td>
+<td class="nw">62.45%</td>
+<td class="nw">62.52%</td>
+<td>63.24% (one run)</td>
+</tr>
+<tr>
+<td>stopped at epoch</td>
+<td class="nw">61</td>
+<td class="nw">64</td>
+<td class="nw">57</td>
+<td class="nw">58</td>
+</tr>
+<tr>
+<td>best epoch (restored)</td>
+<td class="nw">55</td>
+<td class="nw">58</td>
+<td class="nw">51</td>
+<td class="nw">—</td>
+</tr>
+<tr>
+<td>validation accuracy there</td>
+<td class="nw">63.60%</td>
+<td class="nw">63.43%</td>
+<td class="nw">63.52%</td>
+<td class="nw">63.59%</td>
+</tr>
+<tr>
+<td>accuracy at label 0 dB</td>
+<td class="nw">90.5%</td>
+<td class="nw">90.8%</td>
+<td class="nw">90.2%</td>
+<td class="nw">92.21%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Average:</strong> 62.56% ± 0.11. Every run is 0.5–0.8 points below the paper.</li>
+<li><strong>Training behaves as they describe:</strong> it stops by itself around epoch 58, at the same validation accuracy.</li>
+<li><strong>So the paper's 63.24 looks like a slightly favourable single draw</strong> (a lucky split or a lucky start), not a different model. It cannot be checked exactly, because their code cannot reproduce its own split.</li>
+</ul>
+<p><strong>If asked:</strong> "We ran their own code three times, unchanged: 62.71, 62.45 and 62.52 percent. Their 63.24 is a single run, so it looks like a slightly favourable draw; the model is the same."</p></div></details></main><script>
+const all=()=>document.querySelectorAll('details');
+document.getElementById('open').onclick=()=>all().forEach(d=>d.open=true);
+document.getElementById('close').onclick=()=>all().forEach(d=>d.open=false);
+document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>{const d=document.querySelector(a.getAttribute('href'));if(d)d.open=true;});
+</script></body></html>

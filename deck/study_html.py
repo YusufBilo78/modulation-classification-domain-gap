@@ -17,6 +17,8 @@ import sys
 # python deck/study_html.py [STUDY_x.md | READ_x.md]  -> .html next to it (default: STUDY_simple.md)
 SRC = HERE / (sys.argv[1] if len(sys.argv) > 1 else "STUDY_simple.md")
 OUT = SRC.with_suffix(".html")
+# a file named *_en.md gets an English page: labels, buttons and card heads
+EN = SRC.stem.endswith("_en")
 
 CSS = """
 :root{--bg:#F6F8FB;--card:#FFFFFF;--ink:#1E293B;--muted:#5B6B7F;--line:#E2E8F0;
@@ -78,7 +80,7 @@ def md(text):
     # short cells (numbers, dB levels) must not break mid-number on a phone
     out = re.sub(r"<(td|th)>([^<]{1,14})</\1>", r'<\1 class="nw">\2</\1>', out)
     # the three sub-heads of every slide, shown as small labels
-    return re.sub(r"<p><strong>(Slaytta ne var, ne demek|Okuma metni \(EN\)|Olası sorular|Ne diyor|Ne demek|Doğru mu\?|Moshe sorarsa \(EN\))</strong></p>",
+    return re.sub(r"<p><strong>(Slaytta ne var, ne demek|Okuma metni \(EN\)|Olası sorular|Ne diyor|Ne demek|Doğru mu\?|Moshe sorarsa \(EN\)|On the slide|What it means|What it is not|In the paper|If asked|Say it in 30 seconds)</strong></p>",
                   r'<div class="tag">\1</div>', out)
 
 
@@ -92,23 +94,24 @@ def main():
         head, _, body = ch.partition("\n")
         body = re.sub(r"\n---\s*$", "", body.strip())
         # "Slayt 3 — …" / "Bölüm 4.2 — …" get a numbered chip, "[x] …" chip x
-        m = re.match(r"(?:Slayt|Bölüm) ([\d.]+) — (.+)", head)
+        m = re.match(r"(?:Slayt|Bölüm|Slide|Section) ([\d.]+) — (.+)", head)
         t = re.match(r"\[(.+?)\] (.+)", head)
         if m:
             key, label, name = f"s{m[1].replace('.', '-')}", m[1], m[2]
         elif t:
             key, label, name = f"x{i}", t[1], t[2]
         else:
-            key, label, name = f"x{i}", "★" if i == 0 else "?" if head.startswith("Sözlük") else "✓", head
+            key, label, name = f"x{i}", "★" if i == 0 else "?" if head.startswith(("Sözlük", "Glossary")) else "✓", head
         chips.append(f'<a href="#{key}">{label}</a>')
         cards.append(f'<details id="{key}"{" open" if i == 0 else ""}><summary><span class="n">{label}</span>'
                      f'<span>{html.escape(name)}</span></summary><div class="body">{md(body)}</div></details>')
-    page = (f'<!doctype html><html lang="tr"><head><meta charset="utf-8">'
+    lang, label, opn, cls = ("en", "Study notes", "Open all", "Close all") if EN else ("tr", "Sunum çalışma metni", "Hepsini aç", "Hepsini kapat")
+    page = (f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>Sunum çalışma metni</title><style>{CSS}</style></head><body>'
+            f'<title>{label}</title><style>{CSS}</style></head><body>'
             f'<nav>{"".join(chips)}</nav><main><h1>{html.escape(title)}</h1>'
             f'<div class="intro">{intro}</div>'
-            f'<div class="tools"><button id="open">Hepsini aç</button><button id="close">Hepsini kapat</button></div>'
+            f'<div class="tools"><button id="open">{opn}</button><button id="close">{cls}</button></div>'
             f'{"".join(cards)}</main><script>{JS}</script></body></html>')
     OUT.write_text(page)
     print("wrote", OUT, len(page) // 1024, "KB,", len(cards), "cards")
