@@ -1,6 +1,6 @@
 # Study notes — the ICRNNA paper talk
 
-**The deck:** `moshe_paper_icrnna son2.pptx`, 22 slides.
+**The deck:** `moshe_paper_icrnna.pptx` as sent on 27 October: your son2 with the LSTM slide added as slide 5, 22 slides.
 
 - **Main talk:** slides 1–10.
 - **Backup:** slides 11–22, shown only if asked.
@@ -222,7 +222,7 @@ Every technical word on the slides, with what it is and, where people get it wro
 
 - "A neural network looks at 128 samples of a radio signal and says which of 11 modulations sent it."
 - "63.24% — right on RML2016.10a: the best of the 12 models they compare"
-- "our classifier — is built on this design"
+- "my classifier — is built on this design"
 
 **What it means**
 
@@ -241,7 +241,7 @@ Every technical word on the slides, with what it is and, where people get it wro
 - **"the best of the 12 models they compare"** — First in their Table 3.
   - The runner-up, CNN-BiLSTM-DNN, has 62.73: half a point behind, from one run.
   - *Not* "best in the world": newer models they cite, such as IQFormer, are not in their table.
-- **"our classifier is built on this design"** — Our project's classifier uses this architecture.
+- **"my classifier is built on this design"** — The classifier in my project uses this architecture.
   - *Not* their code and *not* their trained network: it is a re-implementation with five small differences, and their weights were never released.
 
 **In the paper**
@@ -258,7 +258,7 @@ Every technical word on the slides, with what it is and, where people get it wro
 
 **Say it in 30 seconds**
 
-> The paper in one sentence: a neural network looks at 128 samples of a radio signal and says which of 11 modulations sent it. They report 63.24 percent right on this dataset, the best of the twelve models they compare. Our own classifier is built on this design.
+> The paper in one sentence: a neural network looks at 128 samples of a radio signal and says which of 11 modulations sent it. They report 63.24 percent right on this dataset, the best of the twelve models they compare. My own classifier is built on this design.
 
 ---
 
@@ -401,7 +401,67 @@ Below the steps:
 
 ---
 
-## Slide 5 — How they trained and tested it
+## Slide 5 — Step 2 up close: what is an LSTM?
+
+**On the slide**
+
+- "It reads the 64 pieces one at a time and carries a memory of 128 numbers from piece to piece. At every piece, three gates act like valves:"
+- Three cards:
+  1. "Keep — forget gate — how much of the old memory to keep: 0 erases it, 1 keeps all of it"
+  2. "Write — input gate — how much of the new piece to add to the memory"
+  3. "Show — output gate — how much of the memory to pass on"
+- A dark card: "Signal-processing view — memory(t) = keep × memory(t−1) + write × new — A leaky integrator whose pole the data sets at every step: near 1 it holds, near 0 it resets."
+- "Each gate is a small learned layer giving numbers between 0 and 1. In ICRNNA: read forwards and backwards, 2 layers, 659,456 numbers (83% of the model)."
+- "It is the only step that reads across symbols, which is where a modulation shows."
+
+**What it means**
+
+- **LSTM** — Long Short-Term Memory (Hochreiter and Schmidhuber, 1997). A recurrent layer: it reads a sequence step by step and carries a state, the memory, from one step to the next.
+- **"The 64 pieces"** — The CNN's output: 64 time steps, each a summary of about 6 samples, less than one symbol.
+- **"A memory of 128 numbers"** — The cell state. It is updated at every piece and is what lets the layer collect evidence across the whole frame.
+- **"Three gates act like valves"** — Each gate is a small learned layer followed by a sigmoid, so it outputs numbers between 0 and 1, one per memory slot. It looks at the new piece and the previous output, and it is recomputed at every piece.
+  - **Keep (forget gate)** — Multiplies the old memory. 1 keeps it, 0 erases it.
+  - **Write (input gate)** — Decides how much of the new information goes into the memory.
+  - **Show (output gate)** — Decides how much of the memory is passed on as the output at this piece.
+- **"memory(t) = keep × memory(t−1) + write × new"** — The heart of the LSTM. The full form is c(t) = f(t) · c(t−1) + i(t) · g(t), element by element, where f is the forget gate, i the input gate and g the new candidate information.
+- **"A leaky integrator whose pole the data sets"** — In filter terms this is a one-pole recursive filter, y(t) = a · y(t−1) + b · x(t), except that a (the keep gate) is not fixed: the data chooses it at every step.
+  - Near 1, the memory holds what it has.
+  - Near 0, it resets.
+  - A plain recurrent network has a fixed "pole", so its memory fades exponentially, and during training so do its gradients. That is why plain RNNs cannot learn long dependencies, and the LSTM can.
+- **"Read forwards and backwards"** — Bidirectional: a second LSTM reads the 64 pieces from the end. Outputs are side by side, 128 + 128 = 256 per piece.
+- **"2 layers"** — A second bidirectional LSTM reads the first one's outputs.
+- **"659,456 numbers (83%)"** — Each gate, and the candidate, has an input matrix, a recurrent matrix and a bias:
+  - first layer: 2 directions × 4 × (128×128 + 128×128 + 128) = 263,168;
+  - second layer: 2 × 4 × (128×256 + 128×128 + 128) = 394,240;
+  - plus batch normalization, 2,048.
+- **"The only step that reads across symbols"** — The CNN sees less than one symbol; attention only averages. A modulation shows in the pattern across symbols: how many phases recur, whether the amplitude changes. So this is where the type is recognised. Their ablation agrees: the LSTM alone gets 63.13%, the full model 63.24%.
+- **What it is not**
+  - Not a perfect memory: it keeps a learned 128-number summary, not the samples.
+  - Not attention: attention averages all pieces at once; the LSTM reads them in order.
+  - Not a transformer, and not a Kalman filter: there is no signal or noise model, everything is learned.
+  - Not linear: the sigmoids and tanh make it a nonlinear filter.
+  - We have not looked inside it to see what each memory slot encodes; "collecting evidence across symbols" is the plausible picture, not a measurement.
+
+**In the paper**
+
+- Section 3.2, pages 4–5, and Figure 2 (Part B).
+- The gate equations are not in the paper; they are the standard LSTM.
+
+**If asked**
+
+- *"What is an LSTM?"* — "A recurrent layer: it reads the 64 pieces in order and keeps a memory of 128 numbers. Three learned gates decide, at every piece, how much of the memory to keep, how much new input to write, and how much to pass on."
+- *"In signal-processing terms?"* — "A learned nonlinear recursive filter. The memory update is a leaky integrator whose pole the data sets at every step: near one it holds, near zero it resets."
+- *"Why not a plain recurrent network?"* — "Its memory fades exponentially, and so do its gradients in training, so it can't learn long dependencies. The LSTM's gated, additive update fixes that."
+- *"How are the gates set?"* — "Each is a small learned layer with a sigmoid, so it gives values between zero and one. It looks at the new piece and the previous output, so it changes at every step."
+- *"Why is it 83% of the model?"* — "Four gate matrices of 128 by its input, in two directions and two layers: 659 thousand numbers."
+
+**Say it in 30 seconds**
+
+> What is an LSTM? It is the layer in step two. It reads the 64 pieces one at a time and carries a memory of 128 numbers from piece to piece. At every piece, three gates act like valves. The forget gate decides how much of the old memory to keep: zero erases it, one keeps all of it. The input gate decides how much of the new piece to write into the memory. The output gate decides how much of the memory to pass on. Each gate is a small learned layer, set fresh at every piece. In signal-processing terms, the memory update is a leaky integrator whose pole the data sets at every step: near one it holds, near zero it resets. In ICRNNA it reads the frame forwards and backwards, in two layers, and holds 83 percent of the model's numbers. It matters because a modulation is a pattern across symbols, and this is the only step that reads across them.
+
+---
+
+## Slide 6 — How they trained and tested it
 
 **On the slide**
 
@@ -446,7 +506,7 @@ Below the steps:
 
 ---
 
-## Slide 6 — Their main table: first by half a point
+## Slide 7 — Their main table: first by half a point
 
 **On the slide**
 
@@ -493,49 +553,6 @@ Below the steps:
 **Say it in 30 seconds**
 
 > Their main result. ICRNNA is first, at 63.24 percent. The next model is half a point behind. The well-known older ones are two to three points behind.
-
----
-
-## Slide 7 — Accuracy against SNR (their Figure 8)
-
-**On the slide**
-
-- Their Figure 8: accuracy, F1 score and precision against the SNR label.
-- "9% — at −20 dB: chance (1 in 11)"
-- "~93% — from 0 dB up"
-- "Figure from El-Haryqy et al. 2025 (CC BY-NC 4.0)"
-
-**What it means**
-
-- **The x-axis** — The SNR label, −20 to +18 dB.
-- **The three curves**
-  - Accuracy.
-  - F1 score: precision and recall combined.
-  - Precision: of the frames called X, the fraction really X, averaged over types.
-  - All three follow the same shape.
-- **"9% at −20 dB: chance"** — With 11 balanced types, guessing gives 1/11 = 9.1%. At −20 dB the signal is buried and the network is guessing.
-  - In practice it dumps almost all frames into one type there. In our runs that type is AM-SSB.
-- **The rise** — Fast between −10 dB (about 25%) and 0 dB (about 92%).
-- **"~93% from 0 dB up"** — A plateau. More SNR does not help, because the remaining errors are not caused by noise:
-  - WBFM against AM-DSB (silences in the audio);
-  - QAM16 against QAM64 (too few symbols).
-- **Decisions behind each point** — About 1,650: the 33,000 test frames split over 20 levels.
-
-**In the paper**
-
-- Figure 8 and Section 4.2.2, page 8.
-- The text quotes "−5 dB" and "−15 dB", levels that do not exist on the 2-dB grid.
-
-**If asked**
-
-- *"How many decisions behind each point?"* — "About 1,650: the test set split over twenty levels, about 150 per type."
-- *"Why does it stop at 93 and not 100?"* — "The remaining errors are WBFM against AM-DSB and QAM16 against QAM64. Neither is fixed by more SNR: one is silence in the audio, the other is too few symbols."
-- *"Why does it jump so fast near 0 dB?"* — "That's where the signal starts to stand out. And the label understates the SNR: at label 0 the PSK types are actually near 5 dB."
-- *"What's the difference between precision and recall?"* — "Recall: of the real X frames, how many were called X. Precision: of the frames called X, how many really were X."
-
-**Say it in 30 seconds**
-
-> Accuracy against noise. At the noisiest level it is right 9 percent of the time, which is guessing among eleven. It improves quickly between minus 10 and 0 dB, and from 0 dB up it is right about 93 percent of the time.
 
 ---
 
@@ -658,29 +675,25 @@ The four older models were ported from a published benchmark's code.
 **On the slide**
 
 1. "A neural network in four steps; step 2, reading in order, does most of the work."
-2. "Its 63.24% is real: we get 63.21% from the paper alone."
-3. "It is about one point better than older models, not a big jump."
+2. "It is about one point better than older models, not a big jump."
 
 "For us: a solid classifier to build on."
 
 **What it means**
 
-- **Point 1** — Slide 4: the LSTM holds 83% of the numbers, and their ablation shows it alone gets almost all the accuracy.
-- **Point 2** — Our faithful rebuild, written from the paper's text before their code existed, reached 63.21%.
-  - It is **one run**, trained until it stopped improving, best at epoch 107. At a fixed 58 epochs, three runs gave 61.75%.
-  - The detail is in backup slides 19–20.
-- **Point 3** — Slide 9.
-- **"A solid classifier to build on"** — Its numbers are reproducible and it is at the top of the field, so it is a sound base for our domain-gap work.
+- **Point 1** — Slides 4 and 5: the LSTM holds 83% of the numbers, and their ablation shows it alone gets almost all the accuracy.
+- **Point 2** — Slide 9: trained the same way as four older models, it is first by about one point.
+- **"A solid classifier to build on"** — Its result can be rebuilt and it is at the top of the field, so it is a sound base for my domain-gap work.
 
 **If asked**
 
-- *"How many runs gave 63.21?"* — "One, trained to the end. At the paper's fixed 58 epochs, three runs gave 61.75."
+- *"Is their 63.24 real?"* — "Yes. I rebuilt the model from the paper's text alone and got 63.21, in one run trained to the end. Their own code, run three times, gives 62.56 on average. That's backup slides 19 and 20."
 - *"What's next for you?"* — "Using this classifier for my main question: how much accuracy is lost when the test signals come from a different source than the training ones. The paper never tests that."
 - *"Would it work on real signals?"* — "Unknown. The paper only tests on this simulated dataset, and that's exactly my research question."
 
 **Say it in 30 seconds**
 
-> To sum up. It is a neural network in four steps, and step two, reading in order, does most of the work. Its 63.24 percent is real: we get 63.21 from the paper alone. And it is about one point better than older models, not a big jump. For us, it is a solid classifier to build on. Thank you. I have more detail on each step if you'd like.
+> To sum up. It is a neural network in four steps, and step two, reading in order, does most of the work. And it is about one point better than older models, not a big jump. For us, it is a solid classifier to build on. Thank you. I have more detail on each step if you'd like.
 
 ---
 
@@ -1146,7 +1159,7 @@ Also on the slide:
 - **"+9 dB"** — 14.0 − 5.1 = 8.9 dB. QAM16 frames carry about eight times more signal power relative to noise than QPSK frames with the same label.
   - The cause: the generator did not scale the constellations to equal power, and an integer QAM grid has about 10 dB more average power than QPSK.
   - "Measured in the file": we estimated the noise from the part of the spectrum outside the signal band, over 1,000 frames per type and label. The method was checked to within half a dB on frames of known SNR.
-- **"A half-point lead from one run may not be real"** — Back to slide 6.
+- **"A half-point lead from one run may not be real"** — Back to slide 7.
 
 **If asked**
 
@@ -1156,6 +1169,51 @@ Also on the slide:
 **Say it in 30 seconds**
 
 > And three things the paper doesn't tell us. It reports one training run, with no spread; across seeds we see up to a point of variation, so a half-point lead may not be real. It doesn't say whether the other models were retrained or copied from their papers. And it treats the SNR label as a true SNR; in this data, at label 0 dB, QAM16 has about 9 dB more signal than QPSK.
+
+---
+
+## [−] Taken out of the deck: accuracy against SNR (their Figure 8)
+
+This slide was removed from the deck. Moshe asked about exactly this curve, so keep it ready.
+
+**On the slide**
+
+- Their Figure 8: accuracy, F1 score and precision against the SNR label.
+- "9% — at −20 dB: chance (1 in 11)"
+- "~93% — from 0 dB up"
+- "Figure from El-Haryqy et al. 2025 (CC BY-NC 4.0)"
+
+**What it means**
+
+- **The x-axis** — The SNR label, −20 to +18 dB.
+- **The three curves**
+  - Accuracy.
+  - F1 score: precision and recall combined.
+  - Precision: of the frames called X, the fraction really X, averaged over types.
+  - All three follow the same shape.
+- **"9% at −20 dB: chance"** — With 11 balanced types, guessing gives 1/11 = 9.1%. At −20 dB the signal is buried and the network is guessing.
+  - In practice it dumps almost all frames into one type there. In our runs that type is AM-SSB.
+- **The rise** — Fast between −10 dB (about 25%) and 0 dB (about 92%).
+- **"~93% from 0 dB up"** — A plateau. More SNR does not help, because the remaining errors are not caused by noise:
+  - WBFM against AM-DSB (silences in the audio);
+  - QAM16 against QAM64 (too few symbols).
+- **Decisions behind each point** — About 1,650: the 33,000 test frames split over 20 levels.
+
+**In the paper**
+
+- Figure 8 and Section 4.2.2, page 8.
+- The text quotes "−5 dB" and "−15 dB", levels that do not exist on the 2-dB grid.
+
+**If asked**
+
+- *"How many decisions behind each point?"* — "About 1,650: the test set split over twenty levels, about 150 per type."
+- *"Why does it stop at 93 and not 100?"* — "The remaining errors are WBFM against AM-DSB and QAM16 against QAM64. Neither is fixed by more SNR: one is silence in the audio, the other is too few symbols."
+- *"Why does it jump so fast near 0 dB?"* — "That's where the signal starts to stand out. And the label understates the SNR: at label 0 the PSK types are actually near 5 dB."
+- *"What's the difference between precision and recall?"* — "Recall: of the real X frames, how many were called X. Precision: of the frames called X, how many really were X."
+
+**Say it in 30 seconds**
+
+> Accuracy against noise. At the noisiest level it is right 9 percent of the time, which is guessing among eleven. It improves quickly between minus 10 and 0 dB, and from 0 dB up it is right about 93 percent of the time.
 
 ---
 

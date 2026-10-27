@@ -389,7 +389,6 @@ SLIDES['protocol'] = () => { const s = pres.addSlide();
 SLIDES['summary'] = () => { const s = pres.addSlide(); s.background = { color: NAVY };
   t(s, "In short", M, 0.55, 8, 0.9, { fontSize: 40, bold: true, color: WHITE });
   const pts = ["A neural network in four steps; step 2, reading in order, does most of the work.",
-    "Its 63.24% is real: we get 63.21% from the paper alone.",
     "It is about one point better than older models, not a big jump."];
   pts.forEach((p, i) => {
     badge(s, M, 1.85 + i * 1.25, i + 1, ORANGE, 0.7);
@@ -407,7 +406,7 @@ SLIDES['oneline'] = () => { const s = pres.addSlide();
   t(s, "A neural network looks at 128 samples of a radio signal and says which of 11 modulations sent it.",
     M + 0.4, 1.6, W - 2 * M - 0.8, 1.9, { fontSize: 28, bold: true, color: WHITE, valign: "middle" });
   big(s, M, 3.85, 5.6, `${P.headline.acc_10a}%`, "right on RML2016.10a: the best of the 12 models they compare", ORANGE, 56);
-  big(s, M + 6.15, 3.85, 5.6, "our classifier", "is built on this design", INK, 56);
+  big(s, M + 6.15, 3.85, 5.6, "my classifier", "is built on this design", INK, 56);
   done(s, "oneline");
 };
 
@@ -430,6 +429,33 @@ SLIDES['steps'] = () => { const s = pres.addSlide();
     M, 5.35, W - 2 * M, 0.5, { fontSize: 19, color: MUTED });
   takeaway(s, "Step 2, reading the pieces in order, is the heart of it.", 5.95);
   done(s, "steps");
+};
+
+SLIDES['lstm_what'] = () => { const s = pres.addSlide();
+  title(s, "Step 2 up close: what is an LSTM?", "THE PAPER  ·  THE MODEL");
+  t(s, "It reads the 64 pieces one at a time and carries a memory of 128 numbers from piece to piece. At every piece, three gates act like valves:",
+    M, 1.42, W - 2 * M, 0.85, { fontSize: 21 });
+  const g = [["Keep", "forget gate", "how much of the old memory to keep: 0 erases it, 1 keeps all of it"],
+    ["Write", "input gate", "how much of the new piece to add to the memory"],
+    ["Show", "output gate", "how much of the memory to pass on"]];
+  g.forEach(([h, tech, d], i) => {
+    const x = M + i * 2.62, w = 2.45;
+    card(s, x, 2.45, w, 2.45);
+    badge(s, x + 0.22, 2.62, i + 1, NAVY, 0.5);
+    t(s, h, x + 0.85, 2.62, w - 1.0, 0.5, { fontSize: 23, bold: true, valign: "middle" });
+    t(s, tech, x + 0.22, 3.2, w - 0.4, 0.4, { fontSize: 15, italic: true, color: MUTED });
+    t(s, d, x + 0.22, 3.6, w - 0.4, 1.2, { fontSize: 17 });
+  });
+  const X = M + 3 * 2.62, CW = W - M - X;
+  card(s, X, 2.45, CW, 2.45, NAVY);
+  t(s, "Signal-processing view", X + 0.3, 2.6, CW - 0.6, 0.45, { fontSize: 17, bold: true, color: ORANGE });
+  t(s, "memory(t) = keep × memory(t−1) + write × new", X + 0.3, 3.05, CW - 0.6, 0.8, { fontSize: 19, bold: true, color: WHITE });
+  t(s, "A leaky integrator whose pole the data sets at every step: near 1 it holds, near 0 it resets.",
+    X + 0.3, 3.9, CW - 0.6, 0.9, { fontSize: 16, color: SOFT });
+  t(s, `Each gate is a small learned layer giving numbers between 0 and 1. In ICRNNA: read forwards and backwards, 2 layers, ${num(OF.blocks.BiLSTM)} numbers (${pct(OF.blocks.BiLSTM, OF.params)}% of the model).`,
+    M, 5.1, W - 2 * M, 0.75, { fontSize: 17, color: MUTED });
+  takeaway(s, "It is the only step that reads across symbols, which is where a modulation shows.", 5.95);
+  done(s, "lstm_what");
 };
 
 SLIDES['trained'] = () => { const s = pres.addSlide();
@@ -492,7 +518,8 @@ SLIDES['backup'] = () => { const s = pres.addSlide(); s.background = { color: NA
 };
 
 // ablation, code_run and real were taken out of the deck on 2026-10-13 (feedback); their builders stay
-const ORDER = ["title", "oneline", "data", "steps", "trained", "table3", "snr", "confusion",
+// snr was taken out of son2 by the user; lstm_what was added after the four steps (2026-10-27)
+const ORDER = ["title", "oneline", "data", "steps", "lstm_what", "trained", "table3", "confusion",
   "protocol", "summary",
   "backup", "model", "cnn", "lstm", "attention", "decision", "training", "code_shows", "epochs", "rebuild", "tables", "unknown"];
 ORDER.forEach(id => { if (!SLIDES[id]) throw new Error(`no slide ${id}`); SLIDES[id](); });
