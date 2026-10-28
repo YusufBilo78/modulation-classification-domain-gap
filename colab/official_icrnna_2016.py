@@ -19,7 +19,7 @@ arguments, copied from their `__main__` block line for line. It adds only:
     theirs and identical in every run.
   - a results file: the per-epoch history, where training stopped, the test
     accuracy, and the test confusion matrix at every SNR, in the same layout
-    as icrnna_faithful_2016.py so deck/paper_figs.py reads both.
+    as icrnna_faithful_2016.py so the same tools read both.
   - resume: a run already in the results file, with its weights saved, is
     skipped.
   - a fixed PYTHONHASHSEED. Their preprocess_data builds the class list from

@@ -1,7 +1,7 @@
 # The noise in RML2016.10a, defined
 
-Moshe, 2026-09-22: *"10 dB of what? Who made the noise, and what are its
-properties?"* This page answers that for RML2016.10a from three sources:
+*10 dB of what? Who made the noise, and what are its properties?* This page
+answers that for RML2016.10a from three sources:
 
 - **The dataset paper.** O'Shea & West, "Radio Machine Learning Dataset
   Generation with GNU Radio", Proc. 6th GNU Radio Conference, 2016. It names

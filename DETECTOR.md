@@ -1,6 +1,6 @@
 # The detector, opened
 
-This page answers Moshe's first question from 2026-09-22: *what is the box?*
+This page answers one question: *what is the box?*
 It covers who wrote the model and where it comes from, what each layer does, how
 it was trained, how a decision is made, and what was done with an AI assistant.
 Everything below is written for the RML2016.10a four-class setting (BPSK, QPSK,
@@ -162,7 +162,7 @@ is in `README.md`.
 
 ## 6. What was written with an AI assistant
 
-Moshe asked this directly: whom did you ask, what did you ask, what came back.
+Three questions: whom was asked, what was asked, what came back.
 
 **The assistant.** Claude Code (Anthropic), a coding assistant that reads the
 repository, writes and edits code, runs commands, and writes documentation.
@@ -172,19 +172,19 @@ or co-wrote is marked in git (`Co-Authored-By: Claude …`).
 **What the record shows.** The git history starts on 2026-09-09. Of the commits
 since then, the large majority were written by the assistant, either as author
 or co-author. That includes most of `src/` as it stands now, the Colab runners,
-the table and figure tools, the slide deck, and most of the text in `README.md`
+the table and figure tools, and most of the text in `README.md`
 and `CLAUDE.md`.
 
 **Not from the assistant:**
 
-- the dataset (DeepSig's RadioML; its noise is theirs, see item 2 of Moshe's list)
+- the dataset (DeepSig's RadioML; its noise is theirs, see `NOISE_2016.md`)
 - the architecture (El-Haryqy et al.) and the peer's reproduction the code was
   transcribed from
 - the numbers. The assistant writes code; the numbers come from running that
   code on a GPU. Every result file is a measurement that can be re-run, and
   several were re-run and came back bit-identical
 - the choice of problem, the direction (e.g. the move to 2016 on 2026-09-22),
-  what to show at meetings, and running every training job
+  what to report, and running every training job
 
 **What kind of things were asked, and what came back.** Examples from the
 record:

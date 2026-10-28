@@ -303,7 +303,7 @@ def per_snr_accuracy(model, loader):
 def confusions_by_snr(model, loader):
     """(snrs, matrices): one n x n matrix per SNR label, rows = sent,
     columns = said, counted on the test set. Same layout as train_backbone's
-    confusions_by_snr, so the deck tools read both."""
+    confusions_by_snr, so the same tools read both."""
     model.eval()
     p, y, s = [], [], []
     for xb, yb, sb in loader:

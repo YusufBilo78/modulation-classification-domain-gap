@@ -82,7 +82,7 @@ It adds:
 - a results file with the per-epoch history, the stopping epoch, the test accuracy and the test confusion matrix at every SNR;
 - resume.
 
-Colab: `AMC_TASK=official_2016` in `colab/run_experiment.py`. The task clones their repository at `ac000a0`. Results go to `Drive/amc-results/official_icrnna/official_icrnna_2016_results.json`; `deck/paper_figs.py` draws them in the paper's layout.
+Colab: `AMC_TASK=official_2016` in `colab/run_experiment.py`. The task clones their repository at `ac000a0`. Results go to `Drive/amc-results/official_icrnna/official_icrnna_2016_results.json`.
 
 Smoke-tested here on a synthetic pickle (TensorFlow 2.21, CPU):
 - training;

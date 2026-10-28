@@ -35,3 +35,11 @@ __pycache__/
 # so nothing is lost, kept out of the repository so a fresh session does not
 # mistake them for current measurements.
 archive_iqnet/
+
+# Private working material: meeting notes, slide decks and study pages. Kept
+# on disk, out of the public repository.
+deck/
+MEETING_*
+CALL_*
+KAM_NOTES.md
+READING_LIST.md

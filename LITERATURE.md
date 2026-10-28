@@ -194,7 +194,7 @@ Two facts worth internalising:
 
 ## The dataset paper, read in full (O'Shea, Roy & Clancy 2018)
 
-Read 2026-09-22 against the questions in `READING_LIST.md`, because a
+Read 2026-09-22, because a
 colleague suggested that "some signals in 2018 are especially degraded" and
 a switch to 2016 was on the table.
 

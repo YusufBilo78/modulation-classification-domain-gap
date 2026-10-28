@@ -28,7 +28,7 @@ Three tasks, matching the numbered list in README.md "Open work":
   "literature_2016"   VT-CNN2, LSTM2, MCLDNN and PET-CGDNN (literature_models.py)
                       trained under train_backbone's protocol on 11-class 2016,
                       next to ICRNNA's committed run
-  "vote_2016"         Moshe's fusion exercise (2026-10-27): the top three
+  "vote_2016"         decision fusion: the top three
                       models of literature_2016 (and then all five) run on the
                       same test frames from their checkpoints; how often they
                       agree, and what a majority vote does. No training.
@@ -57,7 +57,7 @@ Three tasks, matching the numbered list in README.md "Open work":
                       colab/official_icrnna_2016.py: their split, their
                       callbacks, three runs, results and per-SNR confusion
                       matrices written to Drive/amc-results/official_icrnna/
-  "faithful_paper"    the paper-faithful ICRNNA for the paper presentation:
+  "faithful_paper"    the paper-faithful ICRNNA, checked against the paper:
                       (1) the 58-epoch run's three seeds get their test
                       confusion matrices, rebuilt from their checkpoints, no
                       training; (2) the converged run (ceiling 150) goes from
@@ -220,7 +220,7 @@ LIT_EPOCHS = _env("AMC_LIT_EPOCHS", 150, int)
 
 # vote_2016: which models to combine. Each set is one run of vote_fusion.py;
 # the first model of a set is the fallback when there is no majority. The top
-# three by overall accuracy first, as Moshe asked, then all five.
+# three by overall accuracy first, then all five.
 VOTE_SETS = _env("AMC_VOTE_SETS", "ICRNNA,LSTM2,MCLDNN;ICRNNA,LSTM2,MCLDNN,PETCGDNN,VTCNN2")
 
 _TASKS = ("literature_2016", "vote_2016", "rebuild_snr_2018", "compare_methods", "compare_methods_2016", "whitening_seeds",
@@ -394,7 +394,7 @@ def main():
         return
 
     if TASK == "faithful_paper":
-        hr("3. The paper's model, for the paper presentation")
+        hr("3. The paper's model, checked against the paper")
         print("Step 1: the paper's 58-epoch protocol, three seeds already done.")
         print("Only their test confusion matrices are added, from the saved")
         print("checkpoints. No training; a few minutes.\n")

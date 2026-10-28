@@ -10,7 +10,7 @@ and an independently generated one.
 > collapse, attribute it to a specific signal property by intervention rather
 > than correlation, then close it.
 
-Yusuf Bilal Cetinkaya · Moshe Kam's research group · NJIT
+Yusuf Bilal Cetinkaya · NJIT
 
 ---
 
@@ -70,7 +70,6 @@ Yusuf Bilal Cetinkaya · Moshe Kam's research group · NJIT
 | [`SNR_2016.md`](SNR_2016.md) | the four-class box, one SNR at a time |
 | [`literature_2016.md`](literature_2016.md), [`LITERATURE_CHECK.md`](LITERATURE_CHECK.md) | the five-architecture comparison and its check against the papers |
 | [`LITERATURE.md`](LITERATURE.md) | reading notes |
-| `deck/` | meeting decks and study pages, generated from the result files |
 
 ## Running it
 
@@ -504,10 +503,9 @@ Errors go from 2,421 to 6,443, and 5,803 of them are QAM16 and QAM64 read
 as each other. The PSK rows do not move. Per SNR the QAM recall is again
 flat from +2 dB up (QAM16 63–69%, QAM64 72–77%), just lower: halving the
 number of symbols lowers the ceiling, and adding SNR does not lift it. At
-0 dB the pooled accuracy is 82.3% against 92.8%. This is the experiment
-Moshe asked for on 22 September and it came out the way he predicted —
-shorter frames, more errors — with the added information that the errors
-are confined to the one decision that needs many symbols.
+0 dB the pooled accuracy is 82.3% against 92.8%. Shorter frames, more
+errors, as expected — with the added information that the errors are
+confined to the one decision that needs many symbols.
 
 ### Frame length on 2016: 128, 64 and 32 samples
 
@@ -533,9 +531,8 @@ same bound is 2 in 256 and the observed QPSK→BPSK rate is 1.3%.
 
 The recall in every column is again flat from +2 dB upward. So on this
 file there are two separate levers: SNR sets where the curve rises, frame
-length sets how high it can go. Moshe's prediction on 22 September —
-shorter frames, more errors — holds, and the errors land where the
-geometry says they must.
+length sets how high it can go. Shorter frames give more errors, and the
+errors land where the geometry says they must.
 
 ### The method table on 2016, and why it is not the 2018 table
 
@@ -961,19 +958,7 @@ colab/run_training.py   run train_backbone.py on Colab
 colab/run_experiment.py run the open-work sweeps on Colab (AMC_TASK=...)
 colab/icrnna_faithful_2016.py  paper-faithful ICRNNA, for calibration
 colab/official_icrnna_2016.py  the ICRNNA authors' own code, run as published
-deck/                   meeting decks and study pages, built from the result files
 ```
-
-The progress deck for the semester meetings lives in `deck/`. It is
-generated, not drawn: `extract_data.py` reads every quoted number out of the
-committed result files into `deck_data.json`, `crops.py` cuts the panels it
-shows out of `figures/`, and `build.js` (pptxgenjs) writes
-`amc_progress.pptx` from those two inputs alone. Rebuild with
-
-    python deck/extract_data.py && python deck/crops.py
-    cd deck && npm install && node build.js
-
-New results are appended as slides; a withdrawn claim keeps its slide.
 
 ---
 
@@ -1221,7 +1206,7 @@ measured on 2018 is retracted, but no new 2018 work is planned for now.
 
 Next, in order:
 
-1. **Do the classifiers disagree enough to combine?** Moshe's exercise: run the
+1. **Do the classifiers disagree enough to combine?** Run the
    top three models on the same test frames and count how often they agree,
    with a majority vote where two of three do (`vote_fusion.py`, Colab task
    `vote_2016`). Then all five, and a binary version, where decision fusion

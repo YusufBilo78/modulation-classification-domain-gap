@@ -1,6 +1,6 @@
 """One SNR at a time: the four-class box on RML2016.10a, opened level by level.
 
-Moshe, 2026-09-22: show the decision matrix at a single SNR, then lower --
+Show the decision matrix at a single SNR, then lower --
 10, 6, then about 3 dB -- plot the error rate against SNR, and say on every
 graph how many decisions stand behind each point. Show precision next to
 recall.

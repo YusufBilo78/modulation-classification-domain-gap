@@ -1,7 +1,7 @@
 """
 vote_fusion.py -- do the 2016 classifiers disagree enough to be worth combining?
 
-Moshe's exercise (meeting of 2026-10-27). Take the best three models of the
+Decision fusion, the simplest form. Take the best three models of the
 literature comparison, give each exactly the same test frames, and for every
 frame look at the three decisions together:
 
