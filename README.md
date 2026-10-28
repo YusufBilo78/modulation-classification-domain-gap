@@ -1,30 +1,101 @@
-# Automatic Modulation Classification — Domain Generalization Study
+# Why modulation classifiers lose accuracy across domains
 
-## The claim this project is trying to establish
+A study of automatic modulation classification (AMC) on the RadioML
+benchmarks. Reproducing benchmark accuracy is solved; this project measures,
+**explains** and closes the gap between the domain a classifier is trained on
+and an independently generated one.
 
-> A classifier that reaches ~99% on the RadioML benchmark loses a large part of
+> A classifier that is near-perfect on its own dataset loses a large part of
 > that accuracy on IQ generated with a different transmitter. Quantify the
 > collapse, attribute it to a specific signal property by intervention rather
 > than correlation, then close it.
 
-Reproducing RadioML accuracy is not the contribution — that is a solved
-benchmark. The contribution is measuring, **explaining** and partially closing
-the generalization gap between the training domain and an independent one.
+Yusuf Bilal Cetinkaya · Moshe Kam's research group · NJIT
 
 ---
 
-## Status
+## At a glance
 
-The backbone is `model_zoo.ICRNNA` — convolutional front end, bidirectional
-LSTM, additive attention, 786k parameters. Call it through
-`model_zoo.backbone(n_classes)` rather than by name, so the default lives in one
-place.
+| | |
+|---|---|
+| **Datasets** | RML2016.10a: 11 types, 128-sample frames, the current focus. RadioML 2018.01A: 24 types, 1024 samples; its results stand, with no new work for now |
+| **Classifier** | ICRNNA (El-Haryqy et al., *Results in Engineering* 26, 2025): convolution, bidirectional LSTM, additive attention. Built through `model_zoo.backbone(n_classes)` |
+| **Reproduction** | Rebuilt from the paper's text: 63.21% against the paper's 63.24%. The authors' own code, run three times: 62.56% ± 0.11 |
+| **Main question** | How much accuracy is lost on an independently generated domain, why, and what closes it |
+| **Before quoting any number** | read [`CLAUDE.md`](CLAUDE.md): it says which result files are current |
 
-**Measurements are being redone on this backbone.** Everything below describes
-methods, controls and findings that are established in approach but whose
-numbers are being re-measured. Only the table immediately following is current.
+## Main results
 
-### Currently measured
+**Classification on RML2016.10a.** Five published architectures, one protocol: same frames, same 70/15/15 split, three seeds, each trained until it stopped improving.
+
+| model | accuracy, all SNR labels | accuracy, ≥ 10 dB | parameters |
+|---|---|---|---|
+| ICRNNA (2025) | 62.2% | 91.5% | 786k |
+| LSTM2 (2018) | 61.4% | 91.5% | 201k |
+| MCLDNN (2020) | 61.4% | 91.1% | 406k |
+| PET-CGDNN (2021) | 61.0% | 90.6% | 72k |
+| VT-CNN2 (2016) | 56.1% | 82.0% | 1.59M |
+
+- **ICRNNA leads, but by about a point.** Its edge is at −6 to −2 dB; from +2 dB up the top four sit at 90–92%.
+- **The plateau is a property of the data, not the model.**
+  - WBFM is read as AM-DSB during silences in the source audio.
+  - QAM16 and QAM64 cannot be fully separated from 16 symbols. Above 10 dB, cropping the frame to 128, 64 and 32 samples gives 2,421, 6,443 and 10,431 errors in 42,000 decisions.
+
+**The domain gap: trained on RadioML, tested on an independently generated domain.**
+
+| method | 2018: cross-domain accuracy | 2016: in-domain / cross-domain |
+|---|---|---|
+| none | 0.805 | 0.948 / 0.920 |
+| standard augmentation (rotation, flip, noise) | 0.807 | 0.969 / 0.968 |
+| spectral whitening | 0.989 | 0.864 / 0.843 |
+| whitening + augmentation | 0.995 | 0.931 / 0.913 |
+
+- **On 2018 the gap is large and whitening closes it.** The literature augmentation does not.
+- **On 2016 the gap is small and augmentation closes it.** Whitening's cost there was the envelope estimate, not the idea: averaged over enough bins it costs nothing in-domain. It still does not close the 2016 gap.
+- The 2018 results use 5 seeds; the 2016 results use 14.
+
+**Other findings**
+
+- **The SNR label in RML2016.10a is not a measured SNR.** Measured in the file, the real SNR rises about 1.9 dB per dB of label, and at the same label QAM16 carries about 9.5 dB more than the PSK types ([`NOISE_2016.md`](NOISE_2016.md)).
+- **An unseen modulation lands in its own family.** Held out of training, 16 of 24 types are classified into their own pre-registered family, against 3.5 expected by chance.
+
+## Documents
+
+| file | what it is |
+|---|---|
+| [`CLAUDE.md`](CLAUDE.md) | which results are current, and the conventions every run follows |
+| [`DETECTOR.md`](DETECTOR.md) | the classifier end to end: layers, training, provenance, and what was written with an AI assistant |
+| [`OFFICIAL_CODE.md`](OFFICIAL_CODE.md) | the ICRNNA authors' code against the paper and our builds, with three runs of it |
+| [`NOISE_2016.md`](NOISE_2016.md) | what "10 dB" means in RML2016.10a, measured |
+| [`SNR_2016.md`](SNR_2016.md) | the four-class box, one SNR at a time |
+| [`literature_2016.md`](literature_2016.md), [`LITERATURE_CHECK.md`](LITERATURE_CHECK.md) | the five-architecture comparison and its check against the papers |
+| [`LITERATURE.md`](LITERATURE.md) | reading notes |
+| `deck/` | meeting decks and study pages, generated from the result files |
+
+## Running it
+
+- **Locally:** `cd src && python train_backbone.py --data rml2016 --data-path <RML2016.10a_dict.pkl> --arch ICRNNA --seeds 3`
+- **On Colab** (GPU runtime, Drive mounted):
+
+  ```
+  %env AMC_TASK=<task>
+  !python /content/amc/colab/run_experiment.py
+  ```
+
+  The tasks are listed at the top of `colab/run_experiment.py`. Results go to `Drive/amc-results/`, and long runs resume where they stopped.
+- **Data is not in the repository.** It needs the RML2016.10a pickle (`RML2016.10a_dict.pkl`) and, for 2018, `GOLD_XYZ_OSC.0001_1024.hdf5`.
+
+---
+
+## Detailed record
+
+What follows is the full record, in the order the work was done, with every
+caveat. Where it disagrees with the summary above or with `CLAUDE.md`, those
+are current.
+
+### The 2018 method table, first pass (60-epoch ceiling)
+
+Superseded by the converged run (`compare_methods_ICRNNA_es_e100.npz`, in the summary above); kept because of the convergence lesson below.
 
 `compare_methods.py --arch ICRNNA --seeds 5 --epochs 60 --patience 20`,
 **all 20 cells** (`compare_methods_ICRNNA_es.npz`):
@@ -881,9 +952,16 @@ src/crossdomain.py      the central train-on-A / test-on-B experiment
 src/whitening_*.py      whitening and its alpha sweep
 src/compare_methods.py  whitening against the literature baseline
 src/sink_*.py           where an unseen modulation lands
+src/literature_models.py  VT-CNN2, LSTM2, MCLDNN, PET-CGDNN, for the comparison
+src/eval_by_snr.py      per-SNR confusion matrices rebuilt from checkpoints
+src/vote_fusion.py      do the models disagree? majority vote on the same frames
+src/verify_dataset.py   check the data assumptions before training on them
+tools/                  tables, figures and the RML2016.10a SNR measurement
 colab/run_training.py   run train_backbone.py on Colab
-colab/run_experiment.py run the open-work sweeps on Colab
+colab/run_experiment.py run the open-work sweeps on Colab (AMC_TASK=...)
 colab/icrnna_faithful_2016.py  paper-faithful ICRNNA, for calibration
+colab/official_icrnna_2016.py  the ICRNNA authors' own code, run as published
+deck/                   meeting decks and study pages, built from the result files
 ```
 
 The progress deck for the semester meetings lives in `deck/`. It is
@@ -1137,32 +1215,25 @@ queued behind them.
 
 ## Open work
 
-**One dataset: RadioML 2018.01A.** Decided in the 2026-09-16 meeting. Most of
-this list was already 2018 — the domain-gap table, the α sweep and the sink
-thread all run on it — so what the decision actually changes is that the second
-dataset stops being a place new work goes.
+**The focus is RML2016.10a** (since 2026-09-22), because the people around the
+project work on it and results have to be comparable with theirs. Nothing
+measured on 2018 is retracted, but no new 2018 work is planned for now.
 
-It does not retract anything measured on 2016. Those runs stay in the results
-table and stay quotable, and one of them is load-bearing: the faithful build
-reaching 63.21% against the paper's 63.24% is the only point where this
-pipeline is tied to a published number, and that paper is a 2016 paper. Losing
-that link would cost more than the focus is worth.
+Next, in order:
 
-1. Port `dann.py` to the current backbone, or drop the comparison
-2. Real SDR capture when hardware and lab access allow
-3. The remaining sink corroborations on the current backbone — embedding
-   similarity, the discriminating control, label permutation, family recovery
-
-**The 2016 track, in parallel.** Not a third domain in the 2018 experiments
-but the same protocol run again with RML2016.10a as the training domain, so
-the two datasets can be compared table for table without ever being mixed:
-`domains.RML2016Domain` loads the pickle at its native 128 samples, the
-synthetic domain is generated at 128 samples to match, the SNR grid is the
-2016 one (−20..18 dB), and whitening smooths over the same fraction of the
-spectrum at either length. `compare_methods.py --source rml2016` writes
-`compare_methods_ICRNNA_es_rml2016_*.npz`; the Colab task is
-`compare_methods_2016`. The four-class decision table on 2016 gets more seeds
-so that it reaches the same ~10,000 decisions per class as the 2018 one.
+1. **Do the classifiers disagree enough to combine?** Moshe's exercise: run the
+   top three models on the same test frames and count how often they agree,
+   with a majority vote where two of three do (`vote_fusion.py`, Colab task
+   `vote_2016`). Then all five, and a binary version, where decision fusion
+   with each classifier's detection and false-alarm rates is well understood.
+2. **Accuracy at each SNR, method against method**, rather than one average
+   over all twenty labels.
+3. **Smaller sets of modulations.** In practice only a few types are present at
+   once; how does that change the picture? Not started yet, by agreement.
+4. Port `dann.py` to the current backbone, or drop the comparison.
+5. Real SDR capture when hardware and lab access allow.
+6. The remaining sink corroborations on the current backbone: embedding
+   similarity, the discriminating control, label permutation, family recovery.
 
 **Closed.** The sink thread on the current backbone — 16 of 24 held-out classes sink into their own family against a chance of 3.5, all 24 runs converged, and the six-class control holds on all five architectures. The α sweep — 25 cells, all converged; full whitening is at least as good as partial and the WhiteNet disagreement is withdrawn. The method table at a ceiling every cell had room under — `compare_methods_ICRNNA_es_e100.npz`, 20 of 20 converged, the three augmentation cells rerun at 150 and bit-identical. The four-class decision table on 2018 — measured at every SNR,
 converged at a 150 ceiling (peaks 46, 48, 66), two of three seeds
