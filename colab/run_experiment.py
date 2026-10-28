@@ -28,6 +28,11 @@ Three tasks, matching the numbered list in README.md "Open work":
   "literature_2016"   VT-CNN2, LSTM2, MCLDNN and PET-CGDNN (literature_models.py)
                       trained under train_backbone's protocol on 11-class 2016,
                       next to ICRNNA's committed run
+  "vote_2016"         Moshe's fusion exercise (2026-10-27): the top three
+                      models of literature_2016 (and then all five) run on the
+                      same test frames from their checkpoints; how often they
+                      agree, and what a majority vote does. No training.
+                      vote_fusion.py; results to Drive/amc-results/
   "rebuild_snr_2018"  per-SNR confusion matrices for the 24-class 2018 run,
                       rebuilt from its checkpoints (eval_by_snr.py), for the
                       class x SNR recall table; no training
@@ -213,7 +218,12 @@ LIT_ARCHS = _env("AMC_LIT_ARCHS", "VTCNN2,PETCGDNN,LSTM2,MCLDNN")
 LIT_SEEDS = _env("AMC_LIT_SEEDS", 3, int)
 LIT_EPOCHS = _env("AMC_LIT_EPOCHS", 150, int)
 
-_TASKS = ("literature_2016", "rebuild_snr_2018", "compare_methods", "compare_methods_2016", "whitening_seeds",
+# vote_2016: which models to combine. Each set is one run of vote_fusion.py;
+# the first model of a set is the fallback when there is no majority. The top
+# three by overall accuracy first, as Moshe asked, then all five.
+VOTE_SETS = _env("AMC_VOTE_SETS", "ICRNNA,LSTM2,MCLDNN;ICRNNA,LSTM2,MCLDNN,PETCGDNN,VTCNN2")
+
+_TASKS = ("literature_2016", "vote_2016", "rebuild_snr_2018", "compare_methods", "compare_methods_2016", "whitening_seeds",
           "whitening_smoothing_2016", "whitening_crop_2018",
           "faithful_2016", "faithful_budget", "faithful_paper", "official_2016", "converged_2016",
           "converged_2018", "sink_24", "sink_arch")
@@ -503,6 +513,32 @@ def main():
                    "--arch", arch, "--seeds", str(LIT_SEEDS),
                    "--epochs", str(LIT_EPOCHS), "--patience", "20",
                    "--tag", "colab", "--out-dir", str(OUT_DIR)]
+            print(" ".join(cmd) + "\n")
+            sh(cmd, cwd=SRC)
+        hr(f"Done in {(time.time() - t0) / 60:.1f} min")
+        return
+
+    if TASK == "vote_2016":
+        hr("3. Do the models disagree? Majority vote on the same test frames")
+        print("Every model of literature_2016 was scored on the same 33,000 test")
+        print("frames per seed. vote_fusion.py reruns their checkpoints on those")
+        print("frames, checks each against its stored matrices, and counts how")
+        print("often they agree. No training; a few minutes.\n")
+        pkl = None
+        for hint in PKL_HINTS_2016:
+            if (DRIVE / hint).is_file():
+                pkl = DRIVE / hint
+                break
+        if pkl is None:
+            found = list(DRIVE.rglob("RML2016.10a_dict.pkl"))
+            if not found:
+                raise SystemExit("RML2016.10a_dict.pkl not found in Drive.")
+            pkl = found[0]
+        t0 = time.time()
+        for models in VOTE_SETS.split(";"):
+            hr(models)
+            cmd = [sys.executable, "vote_fusion.py", "--results-dir", str(OUT_DIR),
+                   "--data-path", str(pkl), "--models", models]
             print(" ".join(cmd) + "\n")
             sh(cmd, cwd=SRC)
         hr(f"Done in {(time.time() - t0) / 60:.1f} min")
