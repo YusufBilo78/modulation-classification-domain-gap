@@ -114,7 +114,7 @@ if DATASET not in ("rml2016", "rml2018"):
     raise SystemExit(f"AMC_DATASET={DATASET!r}: expected rml2016 or rml2018")
 
 BRANCH = "claude/iacs-modulation-classification-gwwv4m"
-REPO = "https://github.com/YusufBilo78/amc.git"
+REPO = "https://github.com/YusufBilo78/modulation-classification-domain-gap.git"
 DRIVE = pathlib.Path("/content/drive/MyDrive")
 REPO_DIR = pathlib.Path("/content/amc")         # local disk: git on a Drive
                                                 # mount is slow and flaky

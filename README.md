@@ -40,6 +40,9 @@ Yusuf Bilal Cetinkaya · NJIT
 - **The plateau is a property of the data, not the model.**
   - WBFM is read as AM-DSB during silences in the source audio.
   - QAM16 and QAM64 cannot be fully separated from 16 symbols. Above 10 dB, cropping the frame to 128, 64 and 32 samples gives 2,421, 6,443 and 10,431 errors in 42,000 decisions.
+- **Combining the top three buys under a point.** A majority vote of ICRNNA, LSTM2 and MCLDNN reaches 62.9% (92.3% at ≥ 10 dB).
+  - The models are wrong on the same frames: error correlation about 0.8.
+  - At ≥ 10 dB, 88% of the errors all three share are WBFM read as AM-DSB, which no vote can fix. The vote does remove about a third of the QAM16/QAM64 errors, which fall on different frames in each model ([`VOTE_2016.md`](VOTE_2016.md)).
 
 **The domain gap: trained on RadioML, tested on an independently generated domain.**
 
@@ -69,6 +72,7 @@ Yusuf Bilal Cetinkaya · NJIT
 | [`NOISE_2016.md`](NOISE_2016.md) | what "10 dB" means in RML2016.10a, measured |
 | [`SNR_2016.md`](SNR_2016.md) | the four-class box, one SNR at a time |
 | [`literature_2016.md`](literature_2016.md), [`LITERATURE_CHECK.md`](LITERATURE_CHECK.md) | the five-architecture comparison and its check against the papers |
+| [`VOTE_2016.md`](VOTE_2016.md) | majority vote of the top three: how often they agree, and why combining them gains little |
 | [`LITERATURE.md`](LITERATURE.md) | reading notes |
 
 ## Running it
@@ -1206,11 +1210,11 @@ measured on 2018 is retracted, but no new 2018 work is planned for now.
 
 Next, in order:
 
-1. **Do the classifiers disagree enough to combine?** Run the
-   top three models on the same test frames and count how often they agree,
-   with a majority vote where two of three do (`vote_fusion.py`, Colab task
-   `vote_2016`). Then all five, and a binary version, where decision fusion
-   with each classifier's detection and false-alarm rates is well understood.
+1. **Binary decision fusion.** The multi-class vote is done
+   ([`VOTE_2016.md`](VOTE_2016.md)): agreement 77%, a vote gain of 0.7 points,
+   error correlation about 0.8. Next is the binary version, which fuses each
+   classifier's decision by its detection and false-alarm probabilities. It
+   runs on the saved decisions (`vote_rml2016_*_frames.npz`), with no training.
 2. **Accuracy at each SNR, method against method**, rather than one average
    over all twenty labels.
 3. **Smaller sets of modulations.** In practice only a few types are present at

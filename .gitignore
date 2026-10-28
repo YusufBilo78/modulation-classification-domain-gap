@@ -43,3 +43,8 @@ MEETING_*
 CALL_*
 KAM_NOTES.md
 READING_LIST.md
+
+# Per-frame decisions and softmax outputs from vote_fusion.py, 4-7 MB each.
+# The counts that are quoted live in the matching .json, which is committed;
+# the frames stay on Drive next to the checkpoints they came from.
+*_frames.npz

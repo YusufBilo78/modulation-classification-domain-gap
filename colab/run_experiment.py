@@ -231,7 +231,7 @@ if TASK not in _TASKS:
     raise SystemExit(f"AMC_TASK={TASK!r}: expected one of {', '.join(_TASKS)}")
 
 BRANCH = "claude/iacs-modulation-classification-gwwv4m"
-REPO = "https://github.com/YusufBilo78/amc.git"
+REPO = "https://github.com/YusufBilo78/modulation-classification-domain-gap.git"
 DRIVE = pathlib.Path("/content/drive/MyDrive")
 REPO_DIR = pathlib.Path("/content/amc")
 OUT_DIR = DRIVE / "amc-results"
