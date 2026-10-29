@@ -33,6 +33,10 @@ Three tasks, matching the numbered list in README.md "Open work":
                       same test frames from their checkpoints; how often they
                       agree, and what a majority vote does. No training.
                       vote_fusion.py; results to Drive/amc-results/
+  "wbfm_silence_2016" are the WBFM frames every model calls AM-DSB silent?
+                      Frequency and envelope activity of every WBFM and AM-DSB
+                      frame, lined up with the decisions vote_2016 saved.
+                      wbfm_silence.py; no training, no GPU needed
   "rebuild_snr_2018"  per-SNR confusion matrices for the 24-class 2018 run,
                       rebuilt from its checkpoints (eval_by_snr.py), for the
                       class x SNR recall table; no training
@@ -223,7 +227,10 @@ LIT_EPOCHS = _env("AMC_LIT_EPOCHS", 150, int)
 # three by overall accuracy first, then all five.
 VOTE_SETS = _env("AMC_VOTE_SETS", "ICRNNA,LSTM2,MCLDNN;ICRNNA,LSTM2,MCLDNN,PETCGDNN,VTCNN2")
 
-_TASKS = ("literature_2016", "vote_2016", "rebuild_snr_2018", "compare_methods", "compare_methods_2016", "whitening_seeds",
+# Tasks that measure rather than train, and so run on a CPU runtime too.
+CPU_TASKS = ("wbfm_silence_2016",)
+
+_TASKS = ("literature_2016", "vote_2016", "wbfm_silence_2016", "rebuild_snr_2018", "compare_methods", "compare_methods_2016", "whitening_seeds",
           "whitening_smoothing_2016", "whitening_crop_2018",
           "faithful_2016", "faithful_budget", "faithful_paper", "official_2016", "converged_2016",
           "converged_2018", "sink_24", "sink_arch")
@@ -282,10 +289,13 @@ def main():
     import torch
 
     print(f"torch {torch.__version__}   cuda: {torch.cuda.is_available()}")
-    if not torch.cuda.is_available():
+    if torch.cuda.is_available():
+        gpu = torch.cuda.get_device_properties(0)
+        print(f"gpu  : {gpu.name}, {gpu.total_memory / 1e9:.1f} GB")
+    elif TASK in CPU_TASKS:
+        print("no GPU -- fine for this task, which trains nothing")
+    else:
         raise SystemExit("No GPU. Runtime > Change runtime type > GPU.")
-    gpu = torch.cuda.get_device_properties(0)
-    print(f"gpu  : {gpu.name}, {gpu.total_memory / 1e9:.1f} GB")
     st = os.statvfs("/content")
     free_gb = st.f_bavail * st.f_frsize / 1e9
     print(f"local disk free: {free_gb:.0f} GB")
@@ -516,6 +526,31 @@ def main():
             print(" ".join(cmd) + "\n")
             sh(cmd, cwd=SRC)
         hr(f"Done in {(time.time() - t0) / 60:.1f} min")
+        return
+
+    if TASK == "wbfm_silence_2016":
+        hr("3. Are the WBFM frames every model calls AM-DSB silent?")
+        print("Measures how much the frequency and the envelope move in every WBFM")
+        print("and AM-DSB frame, and lines the test frames up with what ICRNNA, LSTM2")
+        print("and MCLDNN said about them (saved by vote_2016). No training; about")
+        print("a minute, most of it loading the pickle.\n")
+        if not (OUT_DIR / "vote_rml2016_ICRNNA_LSTM2_MCLDNN_frames.npz").is_file():
+            raise SystemExit("vote_rml2016_ICRNNA_LSTM2_MCLDNN_frames.npz is not in "
+                             f"{OUT_DIR}. Run AMC_TASK=vote_2016 first.")
+        pkl = None
+        for hint in PKL_HINTS_2016:
+            if (DRIVE / hint).is_file():
+                pkl = DRIVE / hint
+                break
+        if pkl is None:
+            found = list(DRIVE.rglob("RML2016.10a_dict.pkl"))
+            if not found:
+                raise SystemExit("RML2016.10a_dict.pkl not found in Drive.")
+            pkl = found[0]
+        cmd = [sys.executable, "wbfm_silence.py", "--results-dir", str(OUT_DIR), "--data-path", str(pkl)]
+        print(" ".join(cmd) + "\n")
+        sh(cmd, cwd=SRC)
+        print(f"\nfigure: {OUT_DIR / 'wbfm_silence_rml2016.png'}")
         return
 
     if TASK == "vote_2016":
